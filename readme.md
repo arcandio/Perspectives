@@ -2,47 +2,8 @@
 
 A graph editor designed for narratives.
 
-## Perspectives
-* Places (Map)
-* People (Relationships)
-* Events (Timeline)
-* Custom
-	* User 1
-	* User 2
+Perspectives is a node-based graph editor intended to help you design, write, understand, and analyze narratives, from movies to books to comics to role-playing games.
 
-Perspectives are different arrangements
+## Development
 
-## Elements
-* Node
-	* Person
-	* Group
-	* Place
-	* Thing
-	* Event
-* Edge
-	* Action
-	* Membership
-	* Relationship
-	* Path
-	* Dependency
-
-### Element Attributes
-* Name
-* GUID
-* Start Date
-* End Date
-* Description
-* Custom Fields
-	* Type
-	* Value
-* Icon
-* Children
-
-### Node Attributes
-* <NodeType>
-* Positions<Perspective>[]
-
-### Edge Attributes
-* <EdgeType> 
-* Contributors<Element>[]
-* Effects<Element>[]
+Check out the [development notes here](dev.md).
