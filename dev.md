@@ -4,11 +4,7 @@ Perspectives are different arrangements of nodes. Think of them as alternate pla
 * Places (Map)
 * People (Relationships)
 * Events (Timeline)
-* Custom
-	* User 1
-	* User 2
-
-
+* Custom (multiple User created and named)
 
 # Elements
 * Node
@@ -38,22 +34,55 @@ Perspectives are different arrangements of nodes. Think of them as alternate pla
 * Children
 
 ## Node Attributes
-* <NodeType>
-* Positions<Perspective>[]
+* `<NodeType>`
+* `Positions<Perspective>[]`
+* Age
 
 ## Edge Attributes
-* <EdgeType> 
-* Contributors<Element>[]
-* Effects<Element>[]
+* `<EdgeType>`
+* `Contributors<Element>[]`
+* `Effects<Element>[]`
 
-# UI
+# GUI
 * Node Editor Pane
+	* Element List
+		* Local/Global
+	* Element Attributes
 * Tool Pane
 	* New Node
 	* Delete Node
 	* Create Edge
+	* 
 * Menu
 	* New
 	* Save
 	* Save As
 	* Load
+
+# Interaction Design
+* Move Node
+* Link Node
+* Select Node ()
+* Enter Node (double-click node)
+* New Node (double-click background)
+
+# Control Flow
+
+## Editing
+* Manipulate User Interface
+* Data Bind to Object
+* Object Generates JSON
+
+## Saving
+* Save Button
+* File JSON
+* Element JSON
+* IO save file
+
+## Loading
+* Load Button
+* Load Screen
+* Set Load path
+* load file at path
+* parse as JSON
+* Construct Elements
