@@ -32,11 +32,11 @@ public class TimelineDate {
     }
     public int DayOfMonth ()
     {
-        return (int)(ticks / ticksPerYear);
+        
     }
     public int DayOfYear()
     {
-
+        return (int)(ticks / ticksPerYea)r;
     }
     public int Hour ()
     {
