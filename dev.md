@@ -40,8 +40,6 @@ Perspectives are different arrangements of nodes. Think of them as alternate pla
 
 ## Edge Attributes
 * `<EdgeType>`
-* `Contributors<Element>[]`
-* `Effects<Element>[]`
 
 # GUI
 * Node Editor Pane
@@ -60,11 +58,17 @@ Perspectives are different arrangements of nodes. Think of them as alternate pla
 	* Load
 
 # Interaction Design
-* Move Node
-* Link Node
-* Select Node ()
+* Move Node (drag node to background)
+* Link Nodes (right-click-drag node to node)
+* Add Node to parent (drag node to other node)
+* Select Node (click node)
 * Enter Node (double-click node)
+
+* Move Edge Head (drag head end of Edge)
+* Move Edge Tail (drag tail end of Edge)
+
 * New Node (double-click background)
+* Pan View (drag background)
 
 # Control Flow
 

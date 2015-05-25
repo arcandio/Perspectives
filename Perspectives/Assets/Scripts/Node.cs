@@ -8,6 +8,8 @@ public class Node : Element {
 
 	// do drag and drop
     //http://answers.unity3d.com/questions/847941/unity-46-drag-and-drop.html
+
+
 }
 public enum NodeType {
 	None,
