@@ -22,6 +22,10 @@ public class BackgroundInteraction : MonoBehaviour, IDragHandler, IPointerClickH
             nodeInteraction.Setup();
             nodeInteraction.MoveTo(eventData.position);
         }
+        else
+        {
+            ElementPaneUI.elementUI.ClearSelection();
+        }
     }
     
 }

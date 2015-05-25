@@ -63,7 +63,8 @@ Perspectives are different arrangements of nodes. Think of them as alternate pla
 * Move Node (drag node to background)
 * Link Nodes (right-click-drag node to node)
 * Add Node to parent (drag and drop node on other node)
-* Select Node (click node)
+* Select Just This Node (click node)
+* Add Node to Selection (Ctrl+Click node)
 * Enter Node (double-click node)
 
 ## EdgeInteraction

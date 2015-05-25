@@ -2,8 +2,9 @@
 using System.Collections;
 using UnityEngine.EventSystems;
 
-public class NodeInteraction : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler, IPointerClickHandler
+public class NodeInteraction : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
 {
+    Node node;
     GameObject itemBeingDragged;
     Vector3 startPosition;
     Transform startParent;
@@ -19,6 +20,7 @@ public class NodeInteraction : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     public void Setup()
     {
+        node = GetComponent<Node>();
         canvas = GetComponentInParent<Canvas>();
         canvasTransform = canvas.GetComponent<RectTransform>();
         cam = Camera.main;
@@ -67,10 +69,9 @@ public class NodeInteraction : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         }
         GetComponent<CanvasGroup>().blocksRaycasts = true;
     }
-
-    public void OnPointerClick(PointerEventData eventData)
+    public void SelectNode()
     {
-        Debug.Log(eventData.clickCount);
+        ElementPaneUI.elementUI.SelectElement(node);
     }
 
     public void OnDrop(PointerEventData eventData)

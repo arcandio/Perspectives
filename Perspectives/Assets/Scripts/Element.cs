@@ -19,14 +19,6 @@ public class Element : MonoBehaviour {
 	public List<Edge> edgesIn;
 	public RectTransform rectTransform;
 
-	public static GameObject nodePrototype;
-	public static GameObject edgePrototype;
-
-	static Element () {
-		nodePrototype = (GameObject)Resources.Load ("Node", typeof(GameObject));
-		edgePrototype = (GameObject)Resources.Load ("Edge", typeof(GameObject));
-	}
-
 	void Start() {
 		guid = Guid.NewGuid().ToString ();
 	}
@@ -42,6 +34,7 @@ public class Element : MonoBehaviour {
 
 		return instance;
 	}
+
 }
 public enum ElementType {
 	None,
