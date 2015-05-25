@@ -18,6 +18,7 @@ public class EdgeInteraction : MonoBehaviour {
         canvas = GetComponentInParent<Canvas>();
         canvasTransform = canvas.GetComponent<RectTransform>();
         cam = Camera.main;
+        ElementPaneUI.elementUI.AddElement(edge);
     }
 
     public void SelectNode()

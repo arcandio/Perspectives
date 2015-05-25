@@ -24,6 +24,7 @@ public class NodeInteraction : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         canvas = GetComponentInParent<Canvas>();
         canvasTransform = canvas.GetComponent<RectTransform>();
         cam = Camera.main;
+        ElementPaneUI.elementUI.AddElement(node);
     }
 
     public void OnBeginDrag(PointerEventData eventData)

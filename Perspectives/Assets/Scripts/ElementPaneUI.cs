@@ -52,6 +52,18 @@ public class ElementPaneUI : MonoBehaviour {
             selectedElements.Add(e);
         }
     }
+    public void AddElement(Element e)
+    {
+        if (!allElements.Contains(e))
+        {
+            allElements.Add(e);
+        }
+    }
+    public void RemoveElement(Element e)
+    {
+        allElements.Remove(e);
+        allElements.RemoveAll(null);
+    }
 
     public void ClearSelection()
     {
