@@ -58,15 +58,19 @@ Perspectives are different arrangements of nodes. Think of them as alternate pla
 	* Load
 
 # Interaction Design
+
+## NodeInteraction
 * Move Node (drag node to background)
 * Link Nodes (right-click-drag node to node)
-* Add Node to parent (drag node to other node)
+* Add Node to parent (drag and drop node on other node)
 * Select Node (click node)
 * Enter Node (double-click node)
 
+## EdgeInteraction
 * Move Edge Head (drag head end of Edge)
 * Move Edge Tail (drag tail end of Edge)
 
+## BackgroundInteraction
 * New Node (double-click background)
 * Pan View (drag background)
 
