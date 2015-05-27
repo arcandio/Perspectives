@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class Element : MonoBehaviour {
 	public ElementType elementType = ElementType.None;
@@ -18,6 +19,7 @@ public class Element : MonoBehaviour {
 	public List<Edge> edgesOut;
 	public List<Edge> edgesIn;
 	public RectTransform rectTransform;
+    public Text buttonText;
 
 	void Start() {
 		guid = Guid.NewGuid().ToString ();
@@ -34,6 +36,20 @@ public class Element : MonoBehaviour {
 
 		return instance;
 	}
+
+
+    public string Content
+    {
+        get
+        {
+            return name;
+        }
+        set
+        {
+            gameObject.name = value;
+            buttonText.text = value;
+        }
+    }
 
 }
 public enum ElementType {
