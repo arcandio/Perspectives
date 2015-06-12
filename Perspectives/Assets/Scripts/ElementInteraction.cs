@@ -98,7 +98,7 @@ public class ElementInteraction : MonoBehaviour, IBeginDragHandler, IDragHandler
         if (element.elementType == ElementType.Node)
         {
             // We received a drop
-            Debug.Log("Dropped: " + eventData.selectedObject.name);
+            Debug.Log("Dropped: " + eventData.selectedObject);
         }
     }
 
