@@ -10,6 +10,7 @@ public class BackgroundInteraction : MonoBehaviour, IDragHandler, IEndDragHandle
     public RectTransform moveTransform;
     public RectTransform layoutTransform;
     public Vector3 clickOffset;
+    public float zoomSpeed = 1f;
 
     public void OnDrag (PointerEventData eventData)
     {
@@ -49,5 +50,23 @@ public class BackgroundInteraction : MonoBehaviour, IDragHandler, IEndDragHandle
             ElementPaneUI.elementUI.ClearSelection();
         }
     }
-    
+
+    void Update()
+    {
+        float scroll = Input.GetAxis("Mouse ScrollWheel");
+        if (scroll != 0f)
+        {
+            scroll *= zoomSpeed;
+            Vector3 scale = layoutTransform.localScale;
+            scale.x += scroll;
+            scale.x = Mathf.Clamp(scale.x, 0.01f, 5f);
+            scale.y = scale.x;
+            scale.z = scale.x;
+            layoutTransform.localScale = scale;
+        }
+        if (Input.GetKeyUp(KeyCode.Mouse2))
+        {
+            layoutTransform.localScale = Vector3.one;
+        }
+    }
 }
