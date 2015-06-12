@@ -28,7 +28,7 @@ public class ElementPaneUI : MonoBehaviour {
 
     public void SelectElement(Element e)
     {
-        bool additive = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.LeftShift);
+        bool additive = Input.GetButton("Control") || Input.GetButton("Shift");
         SelectElement(e, additive);
     }
 
