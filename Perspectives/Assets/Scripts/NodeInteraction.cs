@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public class NodeInteraction : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
+public class NodeInteraction : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler, IPointerClickHandler
 {
     Node node;
     GameObject itemBeingDragged;
@@ -12,6 +13,8 @@ public class NodeInteraction : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     Canvas canvas;
     RectTransform canvasTransform;
     Camera cam;
+    bool selected = false;
+    public Image background;
 
     void Start()
     {
@@ -29,6 +32,7 @@ public class NodeInteraction : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        Debug.Log("Drag");
         itemBeingDragged = gameObject;
         startPosition = transform.position;
         startParent = transform.parent;
@@ -50,7 +54,7 @@ public class NodeInteraction : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         }
 
         if (canvas.renderMode == RenderMode.ScreenSpaceCamera)
-        {
+        {         
             // For rendering in Screen Space - Camera canvas render mode
             Vector3 pos;
             pos = cam.ScreenToViewportPoint(position);
@@ -70,7 +74,8 @@ public class NodeInteraction : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         }
         GetComponent<CanvasGroup>().blocksRaycasts = true;
     }
-    public void SelectNode()
+
+    public void ClickedElement()
     {
         ElementPaneUI.elementUI.SelectElement(node);
     }
@@ -80,4 +85,31 @@ public class NodeInteraction : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         // We received a drop
         Debug.Log("Dropped: " + eventData.selectedObject.name);
     }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.clickCount == 1)
+        {
+            Debug.Log("Select");
+            ClickedElement();
+        }
+        if (eventData.clickCount == 2)
+        {
+            Debug.Log("Edit");
+        }
+    }
+
+
+    public bool Selected
+    {
+        get
+        {
+            return selected;
+        }
+        set
+        {
+            selected = value;
+        }
+    }
+
 }

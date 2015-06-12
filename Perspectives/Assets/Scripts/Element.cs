@@ -8,6 +8,8 @@ public class Element : MonoBehaviour {
 	public ElementType elementType = ElementType.None;
 	public Node node;
 	public Edge edge;
+    public NodeInteraction nodeInteraction;
+    public EdgeInteraction edgeInteraction;
 	public string guid;
 	public TimelineDate startDate;
 	public TimelineDate endDate;
@@ -23,6 +25,7 @@ public class Element : MonoBehaviour {
 
 	void Start() {
 		guid = Guid.NewGuid().ToString ();
+        Content = gameObject.name;
 	}
 
 	public JSONObject PackJson (){
@@ -50,7 +53,6 @@ public class Element : MonoBehaviour {
             buttonText.text = value;
         }
     }
-
 }
 public enum ElementType {
 	None,

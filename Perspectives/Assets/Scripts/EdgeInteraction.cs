@@ -1,11 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class EdgeInteraction : MonoBehaviour {
     Edge edge;
     Canvas canvas;
     RectTransform canvasTransform;
     Camera cam;
+    bool selected = false;
+    public Image background;
 
     void Start()
     {
@@ -21,8 +24,20 @@ public class EdgeInteraction : MonoBehaviour {
         ElementPaneUI.elementUI.AddElement(edge);
     }
 
-    public void SelectNode()
+    public void ClickedElement()
     {
         ElementPaneUI.elementUI.SelectElement(edge);
+    }
+
+    public bool Selected
+    {
+        get
+        {
+            return selected;
+        }
+        set
+        {
+            selected = value;
+        }
     }
 }

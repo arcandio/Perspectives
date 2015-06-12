@@ -17,6 +17,9 @@ public class ElementPaneUI : MonoBehaviour {
 
     public static ElementPaneUI elementUI;
 
+    public Color colorUnselected;
+    public Color colorSelected;
+
     void Awake()
     {
         elementUI = this;
@@ -118,6 +121,19 @@ public class ElementPaneUI : MonoBehaviour {
 
     public void ClearSelection()
     {
+        // tell all elements they're deselected
+        foreach (Element element in selectedElements)
+        {
+            if (element.nodeInteraction != null)
+            {
+                element.nodeInteraction.Selected = false;
+            }
+            if (element.edgeInteraction != null)
+            {
+                element.edgeInteraction.Selected = false;
+            }
+        }
+
         selectedElements = new List<Element>();
     }
 }
