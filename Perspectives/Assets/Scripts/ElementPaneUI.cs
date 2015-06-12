@@ -49,6 +49,7 @@ public class ElementPaneUI : MonoBehaviour {
         if(!selectedElements.Contains(e))
         {
             selectedElements.Add(e);
+            HighlightSelected();
         }
     }
     void SelectElementExclusive(Element e)
@@ -57,6 +58,15 @@ public class ElementPaneUI : MonoBehaviour {
         {
             ClearSelection();
             selectedElements.Add(e);
+            HighlightSelected();
+        }
+    }
+
+    void HighlightSelected()
+    {
+        foreach (Element element in selectedElements)
+        {
+            element.interaction.Selected = true;
         }
     }
 
@@ -108,6 +118,7 @@ public class ElementPaneUI : MonoBehaviour {
             uiButton.element = element;
             uiButton.buttonText.text = element.name;
             uiButton.SetIcon();
+            uiButton.element.interaction.uiButton = uiButton;
         }
         // now go through and turn off all buttons that are beyond the range of the children
         if (uiButtons.Count > allElements.Count)
@@ -124,14 +135,7 @@ public class ElementPaneUI : MonoBehaviour {
         // tell all elements they're deselected
         foreach (Element element in selectedElements)
         {
-            if (element.nodeInteraction != null)
-            {
-                element.nodeInteraction.Selected = false;
-            }
-            if (element.edgeInteraction != null)
-            {
-                element.edgeInteraction.Selected = false;
-            }
+            element.interaction.Selected = false;
         }
 
         selectedElements = new List<Element>();

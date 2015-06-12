@@ -8,8 +8,6 @@ public class Element : MonoBehaviour {
 	public ElementType elementType = ElementType.None;
 	public Node node;
 	public Edge edge;
-    public NodeInteraction nodeInteraction;
-    public EdgeInteraction edgeInteraction;
 	public string guid;
 	public TimelineDate startDate;
 	public TimelineDate endDate;
@@ -22,6 +20,7 @@ public class Element : MonoBehaviour {
 	public List<Edge> edgesIn;
 	public RectTransform rectTransform;
     public Text buttonText;
+    public ElementInteraction interaction;
 
 	void Start() {
 		guid = Guid.NewGuid().ToString ();

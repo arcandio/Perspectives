@@ -3,9 +3,9 @@ using System.Collections;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class NodeInteraction : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler, IPointerClickHandler
+public class ElementInteraction : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler, IPointerClickHandler
 {
-    Node node;
+    public Element element;
     GameObject itemBeingDragged;
     Vector3 startPosition;
     Transform startParent;
@@ -15,6 +15,7 @@ public class NodeInteraction : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     Camera cam;
     bool selected = false;
     public Image background;
+    public UiButton uiButton;
 
     void Start()
     {
@@ -23,26 +24,34 @@ public class NodeInteraction : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     public void Setup()
     {
-        node = GetComponent<Node>();
+        //element = GetComponent<Element>();
+        //element.node = GetComponent<Node>();
         canvas = GetComponentInParent<Canvas>();
         canvasTransform = canvas.GetComponent<RectTransform>();
         cam = Camera.main;
-        ElementPaneUI.elementUI.AddElement(node);
+        ElementPaneUI.elementUI.AddElement(element);
+        Selected = false;
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        Debug.Log("Drag");
-        itemBeingDragged = gameObject;
-        startPosition = transform.position;
-        startParent = transform.parent;
-        GetComponent<CanvasGroup>().blocksRaycasts = false;
-        rectTransform = GetComponent<RectTransform>();
+        if (element.elementType == ElementType.Node)
+        {
+            Debug.Log("Drag");
+            itemBeingDragged = gameObject;
+            startPosition = transform.position;
+            startParent = transform.parent;
+            GetComponent<CanvasGroup>().blocksRaycasts = false;
+            rectTransform = GetComponent<RectTransform>();
+        }
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        MoveTo(eventData.position);
+        if (element.elementType == ElementType.Node)
+        {
+            MoveTo(eventData.position);
+        }
     }
 
     public void MoveTo(Vector2 position)
@@ -67,23 +76,30 @@ public class NodeInteraction : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        itemBeingDragged = null;
-        if (transform.parent == startParent)
+        if (element.elementType == ElementType.Node)
         {
-            //transform.position = startPosition;
+            itemBeingDragged = null;
+            if (transform.parent == startParent)
+            {
+                //transform.position = startPosition;
+            }
+            GetComponent<CanvasGroup>().blocksRaycasts = true;
         }
-        GetComponent<CanvasGroup>().blocksRaycasts = true;
     }
 
     public void ClickedElement()
     {
-        ElementPaneUI.elementUI.SelectElement(node);
+        Element selected = element.node != null ? (Element)element.node : (Element)element.edge;
+        ElementPaneUI.elementUI.SelectElement(selected);
     }
 
     public void OnDrop(PointerEventData eventData)
     {
-        // We received a drop
-        Debug.Log("Dropped: " + eventData.selectedObject.name);
+        if (element.elementType == ElementType.Node)
+        {
+            // We received a drop
+            Debug.Log("Dropped: " + eventData.selectedObject.name);
+        }
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -109,6 +125,15 @@ public class NodeInteraction : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         set
         {
             selected = value;
+            if (selected)
+            {
+                background.color = ElementPaneUI.elementUI.colorSelected;
+            }
+            else
+            {
+                background.color = ElementPaneUI.elementUI.colorUnselected;
+            }
+            uiButton.Selected = selected;
         }
     }
 

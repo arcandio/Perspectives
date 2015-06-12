@@ -15,14 +15,7 @@ public class UiButton : MonoBehaviour {
 
     public void SelectElement()
     {
-        if (element.nodeInteraction != null)
-        {
-            element.nodeInteraction.ClickedElement();
-        }
-        if (element.edgeInteraction != null)
-        {
-            element.edgeInteraction.ClickedElement();
-        }
+        element.interaction.ClickedElement();
     }
     public bool Selected
     {
@@ -33,7 +26,14 @@ public class UiButton : MonoBehaviour {
         set
         {
             selected = value;
-
+            if (selected)
+            {
+                background.color = ElementPaneUI.elementUI.colorSelected;
+            }
+            else
+            {
+                background.color = ElementPaneUI.elementUI.colorUnselected;
+            }
         }
     }
 }

@@ -17,7 +17,7 @@ public class BackgroundInteraction : MonoBehaviour, IDragHandler, IPointerClickH
         if(eventData.clickCount == 2)
         {
             GameObject clone = (GameObject)Instantiate(nodePrototype);
-            NodeInteraction nodeInteraction = clone.GetComponent<NodeInteraction>();
+            ElementInteraction nodeInteraction = clone.GetComponent<ElementInteraction>();
             clone.transform.SetParent(canvasElements.transform, false);
             nodeInteraction.Setup();
             nodeInteraction.MoveTo(eventData.position);
