@@ -125,6 +125,7 @@ public class ElementInteraction : MonoBehaviour, IBeginDragHandler, IDragHandler
         set
         {
             selected = value;
+            
             if (selected)
             {
                 background.color = ElementPaneUI.elementUI.colorSelected;
@@ -133,6 +134,7 @@ public class ElementInteraction : MonoBehaviour, IBeginDragHandler, IDragHandler
             {
                 background.color = ElementPaneUI.elementUI.colorUnselected;
             }
+            
             uiButton.Selected = selected;
         }
     }
