@@ -12,6 +12,10 @@ public class ElementPaneUI : MonoBehaviour {
     List<Element> allElements;
     public List<Element> selectedElements;
 
+    public Transform efeListTransform;
+    public List<ElementFieldEditor> elementFieldEditors;
+    public Text efeTitle;
+
     public Button ElementListButtonPrototype;
     public Button AttributeListControl;
 
@@ -24,6 +28,21 @@ public class ElementPaneUI : MonoBehaviour {
     {
         elementUI = this;
         allElements = new List<Element>();
+
+        // Setup the correct number of field iu elements
+        elementFieldEditors = new List<ElementFieldEditor>();
+        foreach (Transform child in efeListTransform)
+        {
+            elementFieldEditors.Add(child.GetComponent<ElementFieldEditor>());
+        }
+        // setup the field editors
+        for (int i = 1; i < 11; i++)
+        {
+            ElementFieldType type = (ElementFieldType)i;
+            Debug.Log(type.ToString());
+            elementFieldEditors[i - 1].SetupField(type);
+        }
+        SetupFields(false);
     }
 
     public void SelectElement(Element e)
@@ -50,6 +69,7 @@ public class ElementPaneUI : MonoBehaviour {
         {
             selectedElements.Add(e);
             HighlightSelected();
+            SetupFields(true);
         }
     }
     void SelectElementExclusive(Element e)
@@ -59,6 +79,7 @@ public class ElementPaneUI : MonoBehaviour {
             ClearSelection();
             selectedElements.Add(e);
             HighlightSelected();
+            SetupFields(true);
         }
     }
 
@@ -67,6 +88,52 @@ public class ElementPaneUI : MonoBehaviour {
         foreach (Element element in selectedElements)
         {
             element.interaction.Selected = true;
+        }
+    }
+
+    void SetupFields (bool show)
+    {
+        foreach (ElementFieldEditor efe in elementFieldEditors)
+        {
+            efe.gameObject.SetActive(show);
+        }
+        efeTitle.gameObject.SetActive(show);
+        if (show)
+        {
+            bool nodes = false;
+            bool edges = false;
+            efeTitle.text = selectedElements[0].name;
+            
+            foreach (Element e in selectedElements)
+            {
+                if (e.elementType == ElementType.Node)
+                {
+                    nodes = true;
+                }
+                else if (e.elementType == ElementType.Edge)
+                {
+                    edges = true;
+                }
+            }
+            string selectionType = "";
+            if (edges && nodes)
+            {
+                selectionType = "mixed";
+            }
+            else if (edges)
+            {
+                selectionType = "edge";
+            }
+            else
+            {
+                selectionType = "node";
+            }
+            if (selectedElements.Count > 1 && !(edges && nodes))
+            {
+                selectionType += "s";
+            }
+
+            efeTitle.text += " (" + selectionType + ")";
         }
     }
 
@@ -139,5 +206,6 @@ public class ElementPaneUI : MonoBehaviour {
         }
 
         selectedElements = new List<Element>();
+        SetupFields(false);
     }
 }
