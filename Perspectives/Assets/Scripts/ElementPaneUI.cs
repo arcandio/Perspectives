@@ -24,6 +24,16 @@ public class ElementPaneUI : MonoBehaviour {
     public Color colorUnselected;
     public Color colorSelected;
 
+    public DropDownList dropdown;
+    public List<string> perspectivesDefault;
+    public List<string> perspectivesCustom;
+
+    public List<string> nodeTypesDefault;
+    public List<string> nodeTypesCustom;
+
+    public List<string> edgeTypesDefault;
+    public List<string> edgeTypesCustom;
+
     void Awake()
     {
         elementUI = this;
@@ -39,9 +49,11 @@ public class ElementPaneUI : MonoBehaviour {
         for (int i = 1; i < 11; i++)
         {
             ElementFieldType type = (ElementFieldType)i;
-            Debug.Log(type.ToString());
+            //Debug.Log(type.ToString());
             elementFieldEditors[i - 1].SetupField(type);
         }
+
+
         SetupFields(false);
     }
 
@@ -96,45 +108,60 @@ public class ElementPaneUI : MonoBehaviour {
         foreach (ElementFieldEditor efe in elementFieldEditors)
         {
             efe.gameObject.SetActive(show);
+            efe.ElementToField();
         }
         efeTitle.gameObject.SetActive(show);
         if (show)
         {
-            bool nodes = false;
-            bool edges = false;
-            efeTitle.text = selectedElements[0].name;
-            
-            foreach (Element e in selectedElements)
-            {
-                if (e.elementType == ElementType.Node)
-                {
-                    nodes = true;
-                }
-                else if (e.elementType == ElementType.Edge)
-                {
-                    edges = true;
-                }
-            }
-            string selectionType = "";
-            if (edges && nodes)
-            {
-                selectionType = "mixed";
-            }
-            else if (edges)
-            {
-                selectionType = "edge";
-            }
-            else
-            {
-                selectionType = "node";
-            }
-            if (selectedElements.Count > 1 && !(edges && nodes))
-            {
-                selectionType += "s";
-            }
-
-            efeTitle.text += " (" + selectionType + ")";
+            UpdateAttributeHeader();
         }
+    }
+
+    public void UpdateAttributeHeader()
+    {
+        // update the ui header
+        bool nodes = false;
+        bool edges = false;
+        efeTitle.text = selectedElements[0].Content;
+
+        foreach (Element e in selectedElements)
+        {
+            if (e.elementType == ElementType.Node)
+            {
+                nodes = true;
+            }
+            else if (e.elementType == ElementType.Edge)
+            {
+                edges = true;
+            }
+        }
+        string selectionType = "";
+        if (edges && nodes)
+        {
+            selectionType = "mixed";
+            // turn off the subtype field
+            foreach (ElementFieldEditor efe in elementFieldEditors)
+            {
+                if (efe.fieldName.text == "SubType")
+                {
+                    efe.gameObject.SetActive(false);
+                }
+            }
+        }
+        else if (edges)
+        {
+            selectionType = "edge";
+        }
+        else
+        {
+            selectionType = "node";
+        }
+        if (selectedElements.Count > 1 && !(edges && nodes))
+        {
+            selectionType += "s";
+        }
+
+        efeTitle.text += " (" + selectionType + ")";
     }
 
     public void AddElement(Element e)

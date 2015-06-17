@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class Element : MonoBehaviour {
 	public ElementType elementType = ElementType.None;
+    public string elementSubType = "no type";
 	public Node node;
 	public Edge edge;
 	public string guid;
