@@ -14,7 +14,7 @@ public class Element : MonoBehaviour {
 	public TimelineDate endDate;
 	public string description;
 	public Dictionary<string, string> customFields;
-	public Texture2D icon;
+	//public Texture2D icon;
 	public List<Element> children;
 	public List<Perspective> perspectives;
 	public List<Edge> edgesOut;
@@ -22,10 +22,13 @@ public class Element : MonoBehaviour {
 	public RectTransform rectTransform;
     public Text buttonText;
     public ElementInteraction interaction;
+    [SerializeField]
+    Color color = Color.gray;
 
 	void Start() {
 		guid = Guid.NewGuid().ToString ();
         Content = gameObject.name;
+        Color = color;
 	}
 
 	public JSONObject PackJson (){
@@ -51,6 +54,29 @@ public class Element : MonoBehaviour {
         {
             gameObject.name = value;
             buttonText.text = value;
+        }
+    }
+
+    public Color Color
+    {
+        get
+        {
+            return color;
+        }
+        set
+        {
+            color = value;
+            interaction.background.color = color;
+            if (color.Luminance() > 0.5f)
+            {
+                buttonText.color = Color.black;
+                buttonText.GetComponent<Shadow>().effectColor = Color.white;
+            }
+            else
+            {
+                buttonText.color = Color.white;
+                buttonText.GetComponent<Shadow>().effectColor = Color.black;
+            }
         }
     }
 }

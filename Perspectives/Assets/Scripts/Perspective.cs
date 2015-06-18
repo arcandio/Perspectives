@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[System.Serializable]
 public struct Perspective {
-	string perspective;
-	bool isDisplayed;
-	Vector3 position;
+	public string perspective;
+	public bool isDisplayed;
+	public Vector3 position;
 }

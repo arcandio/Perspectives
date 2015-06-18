@@ -20,10 +20,10 @@ public class DropDownList : MonoBehaviour {
         transform.SetParent(fosterParent.parent, false);
         rectTransform.anchoredPosition = fosterParent.anchoredPosition;
         items = replacements;
-        // check there are enough buttons
+        // check there are enough toggles
         CheckMinimumButtons();
 
-        // setup correct buttons and turn off unused buttons
+        // setup correct toggles and turn off unused toggles
         for (int i = 0; i < buttons.Count; i++)
         {
             if (i < items.Count)

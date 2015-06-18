@@ -18,7 +18,7 @@ public class ElementFieldEditor : MonoBehaviour {
     public Text dropdownText;
 
     public RectTransform perspectives;
-    public RectTransform colors;
+    public PerspectiveList perspectiveList;
     public RectTransform customFields;
 
     public RectTransform dateTimePicker;
@@ -65,6 +65,10 @@ public class ElementFieldEditor : MonoBehaviour {
                 dropdownField.gameObject.SetActive(true);
                 break;
             case ElementFieldType.Perspectives:
+                elementUi.perspectiveList.transform.SetParent(fieldsTransform, false);
+                elementUi.perspectiveList.gameObject.SetActive(true);
+                elementUi.perspectiveList.efe = this;
+                perspectiveList = elementUi.perspectiveList;
                 break;
             case ElementFieldType.Start:
             case ElementFieldType.End:
@@ -74,7 +78,11 @@ public class ElementFieldEditor : MonoBehaviour {
                 inputField.gameObject.SetActive(true);
                 break;
             case ElementFieldType.Color:
-                colors.gameObject.SetActive(true);
+                elementUi.colorSelector.transform.SetParent(fieldsTransform, false);
+                elementUi.colorSelector.gameObject.SetActive(true);
+                elementUi.colorSelector.efe = this;
+                elementUi.colorSelector.elementUi = ElementPaneUI.elementUI;
+                elementUi.colorSelector.SetupColorButtons();
                 break;
             case ElementFieldType.CustomFields:
                 customFields.gameObject.SetActive(true);
@@ -104,6 +112,7 @@ public class ElementFieldEditor : MonoBehaviour {
                 dropdownText.text = elementUi.selectedElements[0].elementSubType;
                 break;
             case ElementFieldType.Perspectives:
+                perspectiveList.ResetList();
                 break;
             case ElementFieldType.Start:
                 break;
@@ -187,7 +196,23 @@ public class ElementFieldEditor : MonoBehaviour {
         ElementToField();
     }
 
+    public void RecievePerspective(List<Perspective> val)
+    {
+        foreach (Element e in elementUi.selectedElements)
+        {
+            e.perspectives = val;
+        }
+        //ElementToField();
+    }
+    public void RecieveColor(Color val)
+    {
+        foreach (Element e in elementUi.selectedElements)
+        {
+            e.Color = val;
+        }
+    }
 }
+
 public enum ElementFieldType 
 {
     None,

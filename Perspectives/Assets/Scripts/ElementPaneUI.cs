@@ -25,6 +25,9 @@ public class ElementPaneUI : MonoBehaviour {
     public Color colorSelected;
 
     public DropDownList dropdown;
+    public PerspectiveList perspectiveList;
+    public ColorSelector colorSelector;
+
     public List<string> perspectivesDefault;
     public List<string> perspectivesCustom;
 
@@ -46,7 +49,7 @@ public class ElementPaneUI : MonoBehaviour {
             elementFieldEditors.Add(child.GetComponent<ElementFieldEditor>());
         }
         // setup the field editors
-        for (int i = 1; i < 11; i++)
+        for (int i = 1; i < 10; i++)
         {
             ElementFieldType type = (ElementFieldType)i;
             //Debug.Log(type.ToString());
@@ -188,7 +191,7 @@ public class ElementPaneUI : MonoBehaviour {
         // resize the children list to the element list
         //uiButtons.Capacity = allElements.Count;
 
-        // iterate through the ELEMENTS and apply them to the child buttons.
+        // iterate through the ELEMENTS and apply them to the child toggles.
 
         for (int i = 0; i < allElements.Count; i++)
         {
@@ -214,7 +217,7 @@ public class ElementPaneUI : MonoBehaviour {
             uiButton.SetIcon();
             uiButton.element.interaction.uiButton = uiButton;
         }
-        // now go through and turn off all buttons that are beyond the range of the children
+        // now go through and turn off all toggles that are beyond the range of the children
         if (uiButtons.Count > allElements.Count)
         {
             for (int i = allElements.Count - 1; i < uiButtons.Count; i++)

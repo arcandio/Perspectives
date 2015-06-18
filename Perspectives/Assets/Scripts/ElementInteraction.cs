@@ -16,6 +16,7 @@ public class ElementInteraction : MonoBehaviour, IBeginDragHandler, IDragHandler
     bool selected = false;
     public Image background;
     public UiButton uiButton;
+    public Image highlight;
 
     void Start()
     {
@@ -128,11 +129,14 @@ public class ElementInteraction : MonoBehaviour, IBeginDragHandler, IDragHandler
             
             if (selected)
             {
-                background.color = ElementPaneUI.elementUI.colorSelected;
+                //background.color = ElementPaneUI.elementUI.colorSelected;
+                highlight.gameObject.SetActive(true);
+                highlight.color = ElementPaneUI.elementUI.colorSelected;
             }
             else
             {
-                background.color = ElementPaneUI.elementUI.colorUnselected;
+                //background.color = ElementPaneUI.elementUI.colorUnselected;
+                highlight.gameObject.SetActive(false);
             }
             
             uiButton.Selected = selected;
