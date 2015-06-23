@@ -19,7 +19,6 @@ public class ElementFieldEditor : MonoBehaviour {
 
     public RectTransform perspectives;
     public PerspectiveList perspectiveList;
-    public RectTransform customFields;
 
     public RectTransform dateTimePicker;
     public InputField yearField;
@@ -28,6 +27,8 @@ public class ElementFieldEditor : MonoBehaviour {
     public InputField hourField;
     public InputField minuteField;
     public InputField secondField;
+
+    public Text textField;
 
     DropDownList dropdown;
 
@@ -75,7 +76,7 @@ public class ElementFieldEditor : MonoBehaviour {
                 dateTimePicker.gameObject.SetActive(true);
                 break;
             case ElementFieldType.Age:
-                inputField.gameObject.SetActive(true);
+                textField.gameObject.SetActive(true);
                 break;
             case ElementFieldType.Color:
                 elementUi.colorSelector.transform.SetParent(fieldsTransform, false);
@@ -85,7 +86,12 @@ public class ElementFieldEditor : MonoBehaviour {
                 elementUi.colorSelector.SetupColorButtons();
                 break;
             case ElementFieldType.CustomFields:
-                customFields.gameObject.SetActive(true);
+                elementUi.customFieldList.gameObject.SetActive(true);
+                elementUi.customFieldList.transform.SetParent(fieldsTransform, false);
+                elementUi.customFieldList.gameObject.SetActive(true);
+                elementUi.customFieldList.efe = this;
+                elementUi.customFieldList.elementUi = ElementPaneUI.elementUI;
+                elementUi.customFieldList.SetupList();
                 break;
         }
 
@@ -99,30 +105,38 @@ public class ElementFieldEditor : MonoBehaviour {
         {
             return;
         }
+
+        Element e = elementUi.selectedElements[0];
         // set the field from the element's data
         switch (fieldType)
         {
             case ElementFieldType.Content:
-                inputField.text = elementUi.selectedElements[0].Content;
+                inputField.text = e.Content;
                 break;
             case ElementFieldType.Description:
-                inputField.text = elementUi.selectedElements[0].description;
+                inputField.text = e.description;
                 break;
             case ElementFieldType.SubType:
-                dropdownText.text = elementUi.selectedElements[0].elementSubType;
+                dropdownText.text = e.elementSubType;
                 break;
             case ElementFieldType.Perspectives:
                 perspectiveList.ResetList();
                 break;
             case ElementFieldType.Start:
+                TimelineDateToField(e.startDate);
+                UpdateAge();
                 break;
             case ElementFieldType.End:
+                TimelineDateToField(e.endDate);
+                UpdateAge();
                 break;
             case ElementFieldType.Age:
                 break;
             case ElementFieldType.Color:
+                elementUi.colorSelector.HighlightCurrentColor(e.Color);
                 break;
             case ElementFieldType.CustomFields:
+                elementUi.customFieldList.Populate(e.customFields);
                 break;
         }
     }
@@ -146,8 +160,12 @@ public class ElementFieldEditor : MonoBehaviour {
                 case ElementFieldType.Perspectives:
                     break;
                 case ElementFieldType.Start:
+                    e.startDate = FieldToTimelineDate();
+                    UpdateAge();
                     break;
                 case ElementFieldType.End:
+                    e.endDate = FieldToTimelineDate();
+                    UpdateAge();
                     break;
                 case ElementFieldType.Age:
                     break;
@@ -157,6 +175,37 @@ public class ElementFieldEditor : MonoBehaviour {
                     break;
             }
         }
+    }
+
+    TimelineDate FieldToTimelineDate()
+    {
+        int year = int.Parse(yearField.text);
+        int month = int.Parse(monthField.text);
+        int day = int.Parse(dayField.text);
+
+        int hour = int.Parse(hourField.text);
+        int minute = int.Parse(minuteField.text);
+        int second = int.Parse(secondField.text);
+
+        return new TimelineDate(year, month, day, hour, minute, second);
+    }
+    void TimelineDateToField(TimelineDate tld)
+    {
+        yearField.text = tld.year.ToString();
+        monthField.text = tld.month.ToString();
+        dayField.text = tld.day.ToString();
+
+        hourField.text = tld.hour.ToString();
+        minuteField.text = tld.minute.ToString();
+        secondField.text = tld.second.ToString();
+    }
+
+    void UpdateAge()
+    {
+        Element e = elementUi.selectedElements[0];
+        string a = (e.endDate - e.endDate).ToString();
+        textField.text = a;
+        Debug.Log("updated age: " + textField.text);
     }
 
     public void DisplayDropdown (bool show, string selected)
@@ -209,8 +258,18 @@ public class ElementFieldEditor : MonoBehaviour {
         foreach (Element e in elementUi.selectedElements)
         {
             e.Color = val;
+            elementUi.colorSelector.HighlightCurrentColor(elementUi.selectedElements[0].Color);
         }
     }
+
+    public void RecieveCustomFields(Dictionary<string, string> d)
+    {
+        foreach (Element e in elementUi.selectedElements)
+        {
+            e.customFields = d;
+        }
+    }
+
 }
 
 public enum ElementFieldType 

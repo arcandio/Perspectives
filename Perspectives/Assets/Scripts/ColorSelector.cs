@@ -9,6 +9,9 @@ public class ColorSelector : MonoBehaviour {
     public List<Button> colorButtons;
     public int hues;
     public int tones;
+    public string current= "";
+    public Sprite currentSprite;
+    public Sprite notCurrentSprite;
 
     public void SetupColorButtons()
     {
@@ -28,6 +31,22 @@ public class ColorSelector : MonoBehaviour {
     {
         Color c = b.image.color;
         efe.RecieveColor(c);
+    }
+
+    public void HighlightCurrentColor(Color c)
+    {
+        current = c.ToString();
+        foreach (Button b in colorButtons)
+        {
+            if (current == b.name)
+            {
+                b.image.sprite = currentSprite;
+            }
+            else if (b.image.sprite == currentSprite)
+            {
+                b.image.sprite = notCurrentSprite;
+            }
+        }
     }
 
     void CheckMinimumButtons()

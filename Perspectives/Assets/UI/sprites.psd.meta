@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 29b6bdbd67fe60f4496ea9a38ab35fd5
-timeCreated: 1434642644
+timeCreated: 1434646323
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -15,6 +15,7 @@ TextureImporter:
     21300016: BoxWhiteInner
     21300018: WhiteRounded
     21300020: Highlight
+    21300022: FrameGouge
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -143,10 +144,10 @@ TextureImporter:
     - name: BoxWhiteInner
       rect:
         serializedVersion: 2
-        x: 0
-        y: 33
-        width: 15
-        height: 15
+        x: 1
+        y: 34
+        width: 13
+        height: 13
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 6, y: 6, z: 6, w: 6}
@@ -170,6 +171,16 @@ TextureImporter:
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 16, y: 16, z: 16, w: 16}
+    - name: FrameGouge
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 6, y: 6, z: 6, w: 6}
   spritePackingTag: 
   userData: 
   assetBundleName: 

@@ -5,7 +5,7 @@ using System.Collections;
 /// A less precise cousin of DateTime, with a wider range and negative values.
 /// </summary>
 [System.Serializable]
-public class TimelineDate {
+public class TimelineDateTicks {
     /// <summary>
     /// number of 1 minute intervals from year zero. Range of about 5 trillion years, +/- 2,500,000,000,000 max/min.
     /// </summary>
@@ -50,13 +50,13 @@ public class TimelineDate {
 	public bool isLeapYear;
 	public int dayOfWeek;
 
-    static public TimelineDate Now ()
+    static public TimelineDateTicks Now ()
     {
-		TimelineDate now = new TimelineDate(System.DateTime.Now.Ticks / 10000000); // 10 million ticks a second
+		TimelineDateTicks now = new TimelineDateTicks(System.DateTime.Now.Ticks / 10000000); // 10 million ticks a second
         return now;
     }
 
-	public TimelineDate(int yearInput, int monthInput, int dayOfMonthInput)
+	public TimelineDateTicks(int yearInput, int monthInput, int dayOfMonthInput)
 	{
 		year = yearInput;
 		monthInteger = monthInput;
@@ -77,7 +77,7 @@ public class TimelineDate {
 		weekOfYear = (int)(dayOfYear / 7);
 	}
 
-	public TimelineDate (long initialTicks)
+	public TimelineDateTicks (long initialTicks)
 	{
 		// Calculate all base values
 		ticks = initialTicks;

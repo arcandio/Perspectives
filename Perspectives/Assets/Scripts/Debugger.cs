@@ -1,23 +1,38 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
+[ExecuteInEditMode]
 public class Debugger : MonoBehaviour {
-	public string nowToDate = "";
-	public TimelineDate now = TimelineDate.Now ();
-	public int year = 2015;
-	public int month =  5;
-	public int dayOfMonth = 23;
-	public TimelineDate today;
+    public long ticks;
+    public string startString;
+    public TimelineDate start;
+    public int dayOfYear;
+    public int dayOfMonth;
+    public int monthOfYear;
+    public string monthName;
+    public string dayName;
+    public TimelineDate end;
+    public TimelineDate age;
+    public TimelineDate calculatedEnd;
 
 	// Use this for initialization
 	void Start () {
-		
+        
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		now = TimelineDate.Now ();
-		nowToDate = now.ToString ();
-		today = new TimelineDate (year, month, dayOfMonth);
+
+        age = end - start;
+        calculatedEnd = start + age;
+        startString = start.ToString();
+
+        dayOfYear = start.DayOfYear();
+        dayOfMonth = Calendar.GetDayOfMonth(start.year, dayOfYear);
+        monthOfYear = Calendar.GetMonthOfYear(start.year, dayOfYear);
+        monthName = start.MonthName();
+        dayName = start.DayName();
+
 	}
 }

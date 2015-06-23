@@ -27,6 +27,7 @@ public class ElementPaneUI : MonoBehaviour {
     public DropDownList dropdown;
     public PerspectiveList perspectiveList;
     public ColorSelector colorSelector;
+    public CustomFieldList customFieldList;
 
     public List<string> perspectivesDefault;
     public List<string> perspectivesCustom;
@@ -36,6 +37,8 @@ public class ElementPaneUI : MonoBehaviour {
 
     public List<string> edgeTypesDefault;
     public List<string> edgeTypesCustom;
+
+    public List<string> customFields;
 
     void Awake()
     {
