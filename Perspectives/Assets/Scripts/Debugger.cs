@@ -2,7 +2,7 @@
 using System.Collections;
 using System;
 
-[ExecuteInEditMode]
+//[ExecuteInEditMode]
 public class Debugger : MonoBehaviour {
     public long ticks;
     public string startString;
@@ -15,10 +15,15 @@ public class Debugger : MonoBehaviour {
     public TimelineDate end;
     public TimelineDate age;
     public TimelineDate calculatedEnd;
+    public string testPath = "derp.json";
+    public FileData testFile;
 
 	// Use this for initialization
 	void Start () {
-        
+        testFile = FileData.NewFile();
+        testFile.InitializeAtPath(testPath);
+        testFile.SaveData();
+        testFile = FileData.GetFile(testPath);
 	}
 	
 	// Update is called once per frame
