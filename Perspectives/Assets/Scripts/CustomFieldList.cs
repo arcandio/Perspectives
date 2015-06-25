@@ -13,7 +13,15 @@ public class CustomFieldList : MonoBehaviour {
         for (int i = 0; i < fieldEntries.Count; i++ )
         {
             CustomFieldEntry cfe = fieldEntries[i];
-            cfe.key.text = elementUi.customFields[i];
+            if (i < FileData.currentFile.customFields.Count)
+            {
+                cfe.gameObject.SetActive(true);
+                cfe.key.text = FileData.currentFile.customFields[i];
+            }
+            else
+            {
+                cfe.gameObject.SetActive(false);
+            }
         }
     }
 
@@ -41,7 +49,7 @@ public class CustomFieldList : MonoBehaviour {
 
     void CheckMinimumFields()
     {
-        if (fieldEntries.Count < elementUi.customFields.Count)
+        if (fieldEntries.Count < FileData.currentFile.customFields.Count)
         {
             GameObject clone = Instantiate(fieldEntries[0].gameObject);
             clone.transform.SetParent(fieldEntries[0].transform.parent, false);

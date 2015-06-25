@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 
 public class PerspectiveList : MonoBehaviour {
-    ElementPaneUI elementUi;
+    //ElementPaneUI elementUi;
     public ElementFieldEditor efe;
     public List<string> items;
     public List<Toggle> toggles;
@@ -13,12 +13,12 @@ public class PerspectiveList : MonoBehaviour {
 
     public void ResetList()
     {
-        elementUi = ElementPaneUI.elementUI;
-        currentElement = elementUi.selectedElements[0];
+        //elementUi = ElementPaneUI.elementUI;
+        currentElement = FileData.currentFile.selectedElements[0];
         // get the new items
         items = new List<string>();
-        items.AddRange(elementUi.perspectivesDefault);
-        items.AddRange(elementUi.perspectivesCustom);
+        items.AddRange(FileData.perspectivesDefault);
+        items.AddRange(FileData.currentFile.perspectivesCustom);
 
         // check there are enough toggles
         CheckMinimumToggles();
@@ -61,7 +61,7 @@ public class PerspectiveList : MonoBehaviour {
     public void Clicked(Toggle t)
     {
         // rebuild the list of perspectives
-        List<Perspective> newlist = elementUi.selectedElements[0].perspectives;
+        List<Perspective> newlist = FileData.currentFile.selectedElements[0].perspectives;
         for (int i = 0; i < toggles.Count; i++ )
         {
             Toggle currentToggle = toggles[i];

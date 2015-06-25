@@ -21,9 +21,6 @@ public class FileBrowser : MonoBehaviour {
     void Start ()
     {
         popupCanvas.gameObject.SetActive(false);
-        //Debug
-        FileData.currentFile = FileData.NewFile();
-        FileData.currentFile.InitializeAtPath("C:/Users/joey/Desktop/derp.json");
     }
 
     public void OpenFileBrowser(FileOperation op)

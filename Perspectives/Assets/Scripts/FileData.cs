@@ -18,6 +18,40 @@ public class FileData : MonoBehaviour {
     public List<Element> selectedElements;
     public int index;
 
+    static public List<string> perspectivesDefault = new List<string>()
+    {
+        "Default",
+        "Places",
+        "People",
+        "Events"
+    };
+    public List<string> perspectivesCustom;
+
+    static public List<string> nodeTypesDefault = new List<string>()
+    {
+        "No Type",
+        "Person",
+        "Group",
+        "Place",
+        "Thing",
+        "Event",
+        "Note"
+    };
+    public List<string> nodeTypesCustom;
+
+    static public List<string> edgeTypesDefault = new List<string>()
+    {
+        "No Type",
+        "Action",
+        "Membership",
+        "Relationship",
+        "Path",
+        "Dependency"
+    };
+    public List<string> edgeTypesCustom;
+
+    public List<string> customFields;
+
     static public FileData GetFile(string path)
     {
         int index = FindInList(path);

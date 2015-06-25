@@ -63,7 +63,7 @@ public class TimelineDate {
         }
     }
 
-    public string ToString()
+    public override string ToString()
     {
         Normalize();
         string sign = Mathf.Sign(year) == -1 ? "-" : "+";

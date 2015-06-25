@@ -130,7 +130,7 @@ public class TimelineDateTicks {
 		weekOfYear = (int)(dayOfYear / 7);
 	}
 
-    public string ToString()
+    public override string ToString()
     {
 		return "" + year + sep + monthInteger + sep + dayOfMonth + " " + hour + ":" + minute;
     }

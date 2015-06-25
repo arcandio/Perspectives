@@ -101,12 +101,12 @@ public class ElementFieldEditor : MonoBehaviour {
     public void ElementToField ()
     {
         // abort if there's no selecttion
-        if (elementUi.selectedElements.Count == 0)
+        if (FileData.currentFile.selectedElements.Count == 0)
         {
             return;
         }
 
-        Element e = elementUi.selectedElements[0];
+        Element e = FileData.currentFile.selectedElements[0];
         // set the field from the element's data
         switch (fieldType)
         {
@@ -143,7 +143,7 @@ public class ElementFieldEditor : MonoBehaviour {
 
     public void FieldToElement()
     {
-        foreach (Element e in elementUi.selectedElements)
+        foreach (Element e in FileData.currentFile.selectedElements)
         {
             switch (fieldType)
             {
@@ -155,7 +155,7 @@ public class ElementFieldEditor : MonoBehaviour {
                     e.description = inputField.text;
                     break;
                 case ElementFieldType.SubType:
-                    DisplayDropdown(dropdownField.isOn, elementUi.selectedElements[0].elementType.ToString());
+                    DisplayDropdown(dropdownField.isOn, FileData.currentFile.selectedElements[0].elementType.ToString());
                     break;
                 case ElementFieldType.Perspectives:
                     break;
@@ -202,7 +202,7 @@ public class ElementFieldEditor : MonoBehaviour {
 
     void UpdateAge()
     {
-        Element e = elementUi.selectedElements[0];
+        Element e = FileData.currentFile.selectedElements[0];
         string a = (e.endDate - e.endDate).ToString();
         textField.text = a;
         Debug.Log("updated age: " + textField.text);
@@ -214,15 +214,15 @@ public class ElementFieldEditor : MonoBehaviour {
         {
             dropdown.gameObject.SetActive(true);
             List<string> combinedList = new List<string>();
-            if (elementUi.selectedElements[0].elementType == ElementType.Node)
+            if (FileData.currentFile.selectedElements[0].elementType == ElementType.Node)
             {
-                combinedList.AddRange(elementUi.nodeTypesDefault);
-                combinedList.AddRange(elementUi.nodeTypesCustom);
+                combinedList.AddRange(FileData.nodeTypesDefault);
+                combinedList.AddRange(FileData.currentFile.nodeTypesCustom);
             }
             else
             {
-                combinedList.AddRange(elementUi.edgeTypesDefault);
-                combinedList.AddRange(elementUi.edgeTypesCustom);
+                combinedList.AddRange(FileData.edgeTypesDefault);
+                combinedList.AddRange(FileData.currentFile.edgeTypesCustom);
             }
 
             dropdown.ResetList(gameObject.GetComponent<RectTransform>(), combinedList);
@@ -238,7 +238,7 @@ public class ElementFieldEditor : MonoBehaviour {
 
     public void RecieveDropdown(string val)
     {
-        foreach (Element e in elementUi.selectedElements)
+        foreach (Element e in FileData.currentFile.selectedElements)
         {
             e.elementSubType = val;
         }
@@ -247,7 +247,7 @@ public class ElementFieldEditor : MonoBehaviour {
 
     public void RecievePerspective(List<Perspective> val)
     {
-        foreach (Element e in elementUi.selectedElements)
+        foreach (Element e in FileData.currentFile.selectedElements)
         {
             e.perspectives = val;
         }
@@ -255,16 +255,16 @@ public class ElementFieldEditor : MonoBehaviour {
     }
     public void RecieveColor(Color val)
     {
-        foreach (Element e in elementUi.selectedElements)
+        foreach (Element e in FileData.currentFile.selectedElements)
         {
             e.Color = val;
-            elementUi.colorSelector.HighlightCurrentColor(elementUi.selectedElements[0].Color);
+            elementUi.colorSelector.HighlightCurrentColor(FileData.currentFile.selectedElements[0].Color);
         }
     }
 
     public void RecieveCustomFields(Dictionary<string, string> d)
     {
-        foreach (Element e in elementUi.selectedElements)
+        foreach (Element e in FileData.currentFile.selectedElements)
         {
             e.customFields = d;
         }

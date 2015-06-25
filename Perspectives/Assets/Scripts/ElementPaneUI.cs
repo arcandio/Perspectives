@@ -8,10 +8,6 @@ public class ElementPaneUI : MonoBehaviour {
     public RectTransform elementAttributesListPanel;
     public Text elementNameText;
 
-    [SerializeField]
-    List<Element> allElements;
-    public List<Element> selectedElements;
-
     public Transform efeListTransform;
     public List<ElementFieldEditor> elementFieldEditors;
     public Text efeTitle;
@@ -29,21 +25,16 @@ public class ElementPaneUI : MonoBehaviour {
     public ColorSelector colorSelector;
     public CustomFieldList customFieldList;
 
-    public List<string> perspectivesDefault;
-    public List<string> perspectivesCustom;
-
-    public List<string> nodeTypesDefault;
-    public List<string> nodeTypesCustom;
-
-    public List<string> edgeTypesDefault;
-    public List<string> edgeTypesCustom;
-
-    public List<string> customFields;
+    public FileData initialFile;
 
     void Awake()
     {
+        // Create a blank new file
+        FileData.currentFile = initialFile;
+        FileData.files.Add(initialFile);
+
         elementUI = this;
-        allElements = new List<Element>();
+        FileData.currentFile.allElements = new List<Element>();
 
         // Setup the correct number of field iu elements
         elementFieldEditors = new List<ElementFieldEditor>();
@@ -83,19 +74,19 @@ public class ElementPaneUI : MonoBehaviour {
 
     void SelectElementAddititve(Element e)
     {
-        if(!selectedElements.Contains(e))
+        if (!FileData.currentFile.selectedElements.Contains(e))
         {
-            selectedElements.Add(e);
+            FileData.currentFile.selectedElements.Add(e);
             HighlightSelected();
             SetupFields(true);
         }
     }
     void SelectElementExclusive(Element e)
     {
-        if (!(selectedElements.Contains(e) && selectedElements.Count == 1))
+        if (!(FileData.currentFile.selectedElements.Contains(e) && FileData.currentFile.selectedElements.Count == 1))
         {
             ClearSelection();
-            selectedElements.Add(e);
+            FileData.currentFile.selectedElements.Add(e);
             HighlightSelected();
             SetupFields(true);
         }
@@ -103,7 +94,7 @@ public class ElementPaneUI : MonoBehaviour {
 
     void HighlightSelected()
     {
-        foreach (Element element in selectedElements)
+        foreach (Element element in FileData.currentFile.selectedElements)
         {
             element.interaction.Selected = true;
         }
@@ -128,9 +119,9 @@ public class ElementPaneUI : MonoBehaviour {
         // update the ui header
         bool nodes = false;
         bool edges = false;
-        efeTitle.text = selectedElements[0].Content;
+        efeTitle.text = FileData.currentFile.selectedElements[0].Content;
 
-        foreach (Element e in selectedElements)
+        foreach (Element e in FileData.currentFile.selectedElements)
         {
             if (e.elementType == ElementType.Node)
             {
@@ -162,7 +153,7 @@ public class ElementPaneUI : MonoBehaviour {
         {
             selectionType = "node";
         }
-        if (selectedElements.Count > 1 && !(edges && nodes))
+        if (FileData.currentFile.selectedElements.Count > 1 && !(edges && nodes))
         {
             selectionType += "s";
         }
@@ -172,17 +163,17 @@ public class ElementPaneUI : MonoBehaviour {
 
     public void AddElement(Element e)
     {
-        if (!allElements.Contains(e))
+        if (!FileData.currentFile.allElements.Contains(e))
         {
-            allElements.Add(e);
+            FileData.currentFile.allElements.Add(e);
             GenerateElementList();
         }
     }
 
     public void RemoveElement(Element e)
     {
-        allElements.Remove(e);
-        allElements.RemoveAll(null);
+        FileData.currentFile.allElements.Remove(e);
+        FileData.currentFile.allElements.RemoveAll(null);
         GenerateElementList();
     }
 
@@ -196,10 +187,10 @@ public class ElementPaneUI : MonoBehaviour {
 
         // iterate through the ELEMENTS and apply them to the child toggles.
 
-        for (int i = 0; i < allElements.Count; i++)
+        for (int i = 0; i < FileData.currentFile.allElements.Count; i++)
         {
             // this element
-            Element element = allElements[i];
+            Element element = FileData.currentFile.allElements[i];
             
             // check if the button in that slot even exists
             if (i > uiButtons.Count - 1)
@@ -221,9 +212,9 @@ public class ElementPaneUI : MonoBehaviour {
             uiButton.element.interaction.uiButton = uiButton;
         }
         // now go through and turn off all toggles that are beyond the range of the children
-        if (uiButtons.Count > allElements.Count)
+        if (uiButtons.Count > FileData.currentFile.allElements.Count)
         {
-            for (int i = allElements.Count - 1; i < uiButtons.Count; i++)
+            for (int i = FileData.currentFile.allElements.Count - 1; i < uiButtons.Count; i++)
             {
                 uiButtons[i].gameObject.SetActive(false);
             }
@@ -233,12 +224,12 @@ public class ElementPaneUI : MonoBehaviour {
     public void ClearSelection()
     {
         // tell all elements they're deselected
-        foreach (Element element in selectedElements)
+        foreach (Element element in FileData.currentFile.selectedElements)
         {
             element.interaction.Selected = false;
         }
 
-        selectedElements = new List<Element>();
+        FileData.currentFile.selectedElements = new List<Element>();
         SetupFields(false);
     }
 }
