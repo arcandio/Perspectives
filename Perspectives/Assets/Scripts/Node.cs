@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Node : Element {
-	public NodeType nodeType = NodeType.None;
+	//public NodeType nodeType = NodeType.None;
 	public Dictionary<string, Vector2> perspectivePositions;
 
 }

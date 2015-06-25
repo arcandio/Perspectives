@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 
 public class Edge : Element {
-	public EdgeType edgeType = EdgeType.None;
+	//public EdgeType edgeType = EdgeType.None;
 	public Element head; // Where the edge is going
 	public Element tail; // where the edge is coming from
 	public Directionality directionality = Directionality.Directional;

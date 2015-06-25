@@ -25,6 +25,8 @@ public class ElementPaneUI : MonoBehaviour {
     public ColorSelector colorSelector;
     public CustomFieldList customFieldList;
 
+    public FileBrowser fileBrowser;
+
     public FileData initialFile;
 
     void Awake()
@@ -49,9 +51,9 @@ public class ElementPaneUI : MonoBehaviour {
             //Debug.Log(type.ToString());
             elementFieldEditors[i - 1].SetupField(type);
         }
-
-
         SetupFields(false);
+
+        fileBrowser.popupCanvas.gameObject.SetActive(false);
     }
 
     public void SelectElement(Element e)

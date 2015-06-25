@@ -18,17 +18,13 @@ public class FileBrowser : MonoBehaviour {
     public Sprite folderIcon;
     public Sprite fileIcon;
 
-    void Start ()
-    {
-        popupCanvas.gameObject.SetActive(false);
-    }
-
     public void OpenFileBrowser(FileOperation op)
     {
+        Debug.Log("OpenFileBrowser: " + op);
         popupCanvas.gameObject.SetActive(true);
         operation = op;
-        gameObject.SetActive(true);
-        backgroundPanel.gameObject.SetActive(true);
+        //gameObject.SetActive(true);
+        //backgroundPanel.gameObject.SetActive(true);
         acceptButtonText.text = operation.ToString() + " File";
         windowTitle.text = acceptButtonText.text;
         addressBarField.text = GetCurrentDirectory();

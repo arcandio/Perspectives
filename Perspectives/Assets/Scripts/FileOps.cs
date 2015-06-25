@@ -16,6 +16,7 @@ public class FileOps : MonoBehaviour {
         // if we DON'T have a valid path, throw a dialog to get a new one.
         else
         {
+            Debug.Log("Throw SaveAs");
             fileBrowser.OpenFileBrowser(FileOperation.Save);
         }
         Debug.Log("Save");
