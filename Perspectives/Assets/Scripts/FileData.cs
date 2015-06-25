@@ -55,7 +55,7 @@ public class FileData : MonoBehaviour {
     }
     public void InitializeAtPath(string path)
     {
-        path = path;
+        this.path = path;
         fileDirectory = Path.GetDirectoryName(path);
         fileName = Path.GetFileNameWithoutExtension(path);
         fileExtension = Path.GetExtension(path);
@@ -90,11 +90,32 @@ public class FileData : MonoBehaviour {
     public void SaveData()
     {
         // collect all data
-        
+        jsonContents = new JSONObject();
+
         // json object to string
         rawContents = jsonContents.ToString(true);
         Debug.Log(jsonContents.ToString(true));
         // write string to file
         File.WriteAllText(path, rawContents);
     }
+
+    public bool HasValidPath()
+    {
+        // Did not have a path at all, probably a New file
+        if (string.IsNullOrEmpty(path))
+        {
+            return false;
+        }
+        // The directory of the file exists, so we can save there, regardless of whether the file actuall exists
+        else if (Directory.Exists(Path.GetDirectoryName(path)))
+        {
+            return true;
+        }
+        // The directory doesn't exist, so we need a new path.
+        else
+        {
+            return false;
+        }
+    }
+
 }

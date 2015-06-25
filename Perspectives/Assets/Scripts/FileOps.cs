@@ -8,14 +8,23 @@ public class FileOps : MonoBehaviour {
 
     public void SaveFile()
     {
-        fileBrowser.OpenFileBrowser(FileOperation.Save);
+        // if we already have a path, just save it without throwing a dialog.
+        if (FileData.currentFile.HasValidPath())
+        {
+            FileData.currentFile.SaveData();
+        }
+        // if we DON'T have a valid path, throw a dialog to get a new one.
+        else
+        {
+            fileBrowser.OpenFileBrowser(FileOperation.Save);
+        }
         Debug.Log("Save");
         debug.text = "save";
     }
 
     public void SaveFileAs ()
     {
-        fileBrowser.OpenFileBrowser(FileOperation.SaveAs);
+        fileBrowser.OpenFileBrowser(FileOperation.Save);
         Debug.Log("Save as");
         debug.text = "save as";
     }
@@ -29,6 +38,7 @@ public class FileOps : MonoBehaviour {
 
     public void NewFile()
     {
+        FileData.currentFile = FileData.NewFile();
         Debug.Log("New");
         debug.text = "new";
     }

@@ -12,7 +12,6 @@ public class FileBrowser : MonoBehaviour {
     public InputField fileNameField;
     public Text windowTitle;
     public Text acceptButtonText;
-    public FileData fileData;
     public Image backgroundPanel;
     public Canvas popupCanvas;
     public List<FileBrowserButton> fileButtons;
@@ -22,6 +21,9 @@ public class FileBrowser : MonoBehaviour {
     void Start ()
     {
         popupCanvas.gameObject.SetActive(false);
+        //Debug
+        FileData.currentFile = FileData.NewFile();
+        FileData.currentFile.InitializeAtPath("C:/Users/joey/Desktop/derp.json");
     }
 
     public void OpenFileBrowser(FileOperation op)
@@ -41,32 +43,41 @@ public class FileBrowser : MonoBehaviour {
     }
     public void ExecuteFileBrowser()
     {
-        // first, check what kind of file the path is.
-
-
-        if (fileNameField.text.EndsWith(".json"))
-        {
-            switch (operation)
-            {
-                case FileOperation.Save:
-
-                    SetCurrentDirectory(fileData.fileDirectory);
-                    break;
-                case FileOperation.Load:
-
-                    SetCurrentDirectory(fileData.fileDirectory);
-                    break;
-                case FileOperation.SaveAs:
-
-                    SetCurrentDirectory(fileData.fileDirectory);
-                    break;
-            }
-        }
-        else
+        string fullDir = addressBarField.text + Path.DirectorySeparatorChar + fileNameField.text;
+        // if we have an existing directory, open it up
+        if (Directory.Exists(fullDir))
         {
             addressBarField.text += Path.DirectorySeparatorChar + fileNameField.text;
             fileNameField.text = "";
             GetDirectoryContents();
+        }
+
+        // It wasn't a Directory, so it must be a file. Switch on the operation.
+        else
+        {
+            string completePath = fullDir.EndsWith(".json") ? fullDir : fullDir + ".json";
+            bool fileExists = File.Exists(completePath);
+            switch (operation)
+            {
+                case FileOperation.Save:
+                    FileData.currentFile.InitializeAtPath(completePath);
+                    FileData.currentFile.SaveData();
+                    SetCurrentDirectory(addressBarField.text);
+                    CloseFileBrowser();
+                    break;
+                case FileOperation.Load:
+                    if (fileExists)
+                    {
+                        FileData.currentFile = FileData.GetFile(completePath);
+                        SetCurrentDirectory(addressBarField.text);
+                        CloseFileBrowser();
+                    }
+                    else
+                    {
+                        Debug.LogWarning("Tried to load a file that doesn't exist: "+completePath);
+                    }
+                    break;
+            }
         }
     }
     public void ReceiveClick(FileBrowserButton b)
@@ -143,7 +154,6 @@ public enum FileOperation
 {
     None,
     Save,
-    SaveAs,
     Load
 }
 [System.Serializable]
