@@ -6,6 +6,8 @@ public class Edge : Element {
 	//public EdgeType edgeType = EdgeType.None;
 	public Element head; // Where the edge is going
 	public Element tail; // where the edge is coming from
+    public string headGuid;
+    public string tailGuid;
 	public Directionality directionality = Directionality.Directional;
     public float width = 1f;
     public Image lineImage;
@@ -33,7 +35,14 @@ public class Edge : Element {
         float yDiff = point2.y - point1.y;
         return Mathf.Atan2(yDiff, xDiff) * (180 / Mathf.PI);
     }
-
+    public void EndsFromGuids()
+    {
+        // Find appropriate Elements
+        head = fileData.GetElementByName(headGuid);
+        tail = fileData.GetElementByName(tailGuid);
+        // set the position
+        UpdatePosition();
+    }
 }
 public enum EdgeType {
 	None,

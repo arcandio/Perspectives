@@ -28,6 +28,7 @@ public class ElementPaneUI : MonoBehaviour {
     public FileBrowser fileBrowser;
 
     public FileData initialFile;
+    public BackgroundInteraction bgi;
 
     void Awake()
     {
@@ -102,7 +103,7 @@ public class ElementPaneUI : MonoBehaviour {
         }
     }
 
-    void SetupFields (bool show)
+    public void SetupFields (bool show)
     {
         foreach (ElementFieldEditor efe in elementFieldEditors)
         {
@@ -165,6 +166,11 @@ public class ElementPaneUI : MonoBehaviour {
 
     public void AddElement(Element e)
     {
+        /*
+        Debug.Log(FileData.currentFile.ToString());
+        Debug.Log(FileData.currentFile.allElements.ToString());
+        Debug.Log(e.ToString());
+        */
         if (!FileData.currentFile.allElements.Contains(e))
         {
             FileData.currentFile.allElements.Add(e);
@@ -179,7 +185,7 @@ public class ElementPaneUI : MonoBehaviour {
         GenerateElementList();
     }
 
-    void GenerateElementList()
+    public void GenerateElementList()
     {
         // Get list of all children
         List<Transform> uiButtons = elementListPanel.transform.ListChildren();
@@ -209,7 +215,7 @@ public class ElementPaneUI : MonoBehaviour {
             UiButton uiButton = uiButtons[i].GetComponent<UiButton>();
             uiButton.gameObject.SetActive(true);
             uiButton.element = element;
-            uiButton.buttonText.text = element.name;
+            uiButton.buttonText.text = element.Content;
             uiButton.SetIcon();
             uiButton.element.interaction.uiButton = uiButton;
         }
@@ -218,6 +224,7 @@ public class ElementPaneUI : MonoBehaviour {
         {
             for (int i = FileData.currentFile.allElements.Count - 1; i < uiButtons.Count; i++)
             {
+                Debug.Log("turning off " + i);
                 uiButtons[i].gameObject.SetActive(false);
             }
         }

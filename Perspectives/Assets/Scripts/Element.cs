@@ -9,7 +9,7 @@ public class Element : MonoBehaviour {
     public string elementSubType = "no type";
 	public Node node;
 	public Edge edge;
-	public string guid;
+	//string guid;
 	public TimelineDate startDate;
 	public TimelineDate endDate;
 	public string description;
@@ -24,10 +24,11 @@ public class Element : MonoBehaviour {
     public ElementInteraction interaction;
     [SerializeField]
     Color color = Color.gray;
+    public FileData fileData;
 
 	void Start() {
-		guid = Guid.NewGuid().ToString ();
-        Content = gameObject.name;
+		Guid = System.Guid.NewGuid().ToString ();
+        //Content = gameObject.name;
         Color = color;
 	}
 
@@ -43,8 +44,7 @@ public class Element : MonoBehaviour {
 		return instance;
 	}
 
-
-    public string Content
+    public string Guid
     {
         get
         {
@@ -53,6 +53,18 @@ public class Element : MonoBehaviour {
         set
         {
             gameObject.name = value;
+            //guid = value;
+        }
+    }
+    public string Content
+    {
+        get
+        {
+            return buttonText.text;
+        }
+        set
+        {
+            //gameObject.name = value;
             buttonText.text = value;
         }
     }

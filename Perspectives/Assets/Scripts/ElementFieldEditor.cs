@@ -205,7 +205,7 @@ public class ElementFieldEditor : MonoBehaviour {
         Element e = FileData.currentFile.selectedElements[0];
         string a = (e.endDate - e.endDate).ToString();
         textField.text = a;
-        Debug.Log("updated age: " + textField.text);
+        //Debug.Log("updated age: " + textField.text);
     }
 
     public void DisplayDropdown (bool show, string selected)

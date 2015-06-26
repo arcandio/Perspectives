@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 
 public class BackgroundInteraction : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDragHandler, IPointerClickHandler {
     public GameObject nodePrototype;
+    public GameObject edgePrototype;
     public Transform layout;
     public Camera cam;
     public RectTransform moveTransform;

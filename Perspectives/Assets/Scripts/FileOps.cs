@@ -44,6 +44,11 @@ public class FileOps : MonoBehaviour {
         debug.text = "new";
     }
 
+    public void OpenSite()
+    {
+        Application.OpenURL("https://github.com/arcandio/Perspectives");
+    }
+
     void Update ()
     {
         if (Input.GetButton("Control"))
