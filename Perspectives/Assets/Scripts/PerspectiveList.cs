@@ -34,7 +34,7 @@ public class PerspectiveList : MonoBehaviour {
                 
                 // check if this is already active
                 toggles[i].isOn = false;
-                foreach (Perspective p in currentElement.perspectives)
+                foreach (Perspective p in currentElement.perspectives.ToArray())
                 {
                     if (p.perspective == items[i] && p.isDisplayed)
                     {

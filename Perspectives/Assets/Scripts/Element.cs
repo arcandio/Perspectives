@@ -32,18 +32,6 @@ public class Element : MonoBehaviour {
         Color = color;
 	}
 
-	public JSONObject PackJson (){
-		JSONObject json = new JSONObject (JSONObject.Type.OBJECT);
-
-		return json;
-	}
-
-	public static Element UnpackJson(JSONObject json) {
-		Element instance = new Element();
-
-		return instance;
-	}
-
     public string Guid
     {
         get

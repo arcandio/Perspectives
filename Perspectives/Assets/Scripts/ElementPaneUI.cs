@@ -222,9 +222,9 @@ public class ElementPaneUI : MonoBehaviour {
         // now go through and turn off all toggles that are beyond the range of the children
         if (uiButtons.Count > FileData.currentFile.allElements.Count)
         {
-            for (int i = FileData.currentFile.allElements.Count - 1; i < uiButtons.Count; i++)
+            for (int i = FileData.currentFile.allElements.Count; i < uiButtons.Count; i++)
             {
-                Debug.Log("turning off " + i);
+                //Debug.Log("turning off " + i);
                 uiButtons[i].gameObject.SetActive(false);
             }
         }

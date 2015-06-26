@@ -169,7 +169,14 @@ public class FileData : MonoBehaviour {
             allElements.Add(UnpackElement(je[i]));
         }
         // now apply edge linking
-
+        foreach (Element e in allElements)
+        {
+            Edge edge = e.edge;
+            if (edge != null)
+            {
+                edge.EndsFromGuids();
+            }
+        }
     }
     Element UnpackElement(JSONObject j)
     {
@@ -201,6 +208,7 @@ public class FileData : MonoBehaviour {
             // hierarchy stuff
             e.transform.SetParent(ElementPaneUI.elementUI.bgi.layout, false);
             e.interaction.Setup();
+            e.fileData = this;
 
             // base element values
             e.Guid = j.GetField("guid").str;

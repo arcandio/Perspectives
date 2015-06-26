@@ -83,7 +83,7 @@ public class FileBrowser : MonoBehaviour {
         items.AddRange(Directory.GetDirectories(addressBarField.text));
         int directoryCount = items.Count;
         items.AddRange(Directory.GetFiles(addressBarField.text, "*.json"));
-        Debug.Log(string.Join(" - ", items.ToArray()));
+        //Debug.Log(string.Join(" - ", items.ToArray()));
         CheckMinimumButtons(items.Count);
         for (int i = 0; i < fileButtons.Count; i++)
         {
