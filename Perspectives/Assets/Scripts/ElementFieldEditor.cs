@@ -174,6 +174,7 @@ public class ElementFieldEditor : MonoBehaviour {
                 case ElementFieldType.CustomFields:
                     break;
             }
+            ElementPaneUI.elementUI.GenerateElementList();
         }
     }
 

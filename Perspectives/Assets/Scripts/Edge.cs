@@ -8,6 +8,10 @@ public class Edge : Element {
 	public Element tail; // where the edge is coming from
     public string headGuid;
     public string tailGuid;
+    public Vector3 headPos;
+    public Vector3 tailPos;
+    public Vector3 dragPos;
+    public EdgeDragMode dragMode = EdgeDragMode.None;
 	public Directionality directionality = Directionality.Directional;
     public float width = 1f;
     public Image lineImage;
@@ -18,15 +22,34 @@ public class Edge : Element {
 	}
 	void UpdatePosition () {
 		if (head != null && tail != null) {
-            rectTransform.position = (head.rectTransform.position + tail.rectTransform.position) / 2;
+            // check for changes
+            if (head.rectTransform.position != headPos || tail.rectTransform.position != tailPos || dragMode != EdgeDragMode.None)
+            {
+                // get head and tail pos
+                headPos = head.rectTransform.position;
+                tailPos = tail.rectTransform.position;
 
-            // do it with an Image instead
-            // set line length
-            Vector2 lineSize = new Vector2((head.transform.position-tail.transform.position).magnitude, width);
-            lineTransform.sizeDelta = lineSize;
-            Vector3 euler = new Vector3(0, 0, CalcualateAngle(tail.transform.position, head.transform.position));
-            lineTransform.rotation = Quaternion.Euler(euler);
-		}
+                // check for dragging an end
+                if (dragMode == EdgeDragMode.Head)
+                {
+                    headPos = dragPos;
+                }
+                else if (dragMode == EdgeDragMode.Tail)
+                {
+                    tailPos = dragPos;
+                }
+
+                // set label position
+                rectTransform.position = (headPos + tailPos) / 2;
+
+                // do it with an Image instead
+                // set line length
+                Vector2 lineSize = new Vector2((headPos - tailPos).magnitude, width);
+                lineTransform.sizeDelta = lineSize;
+                Vector3 euler = new Vector3(0, 0, CalcualateAngle(tailPos, headPos));
+                lineTransform.rotation = Quaternion.Euler(euler);
+            }
+		}        
 	}
 
     float CalcualateAngle(Vector3 point1, Vector3 point2)
@@ -56,4 +79,10 @@ public enum Directionality {
 	Nondirectional,
 	Directional,
 	Bidirectional
+}
+public enum EdgeDragMode
+{
+    None,
+    Head,
+    Tail
 }

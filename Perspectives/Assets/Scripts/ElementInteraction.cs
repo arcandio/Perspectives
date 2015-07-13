@@ -45,6 +45,18 @@ public class ElementInteraction : MonoBehaviour, IBeginDragHandler, IDragHandler
             GetComponent<CanvasGroup>().blocksRaycasts = false;
             rectTransform = GetComponent<RectTransform>();
         }
+        if (element.elementType == ElementType.Edge)
+        {
+            // Determine dragged end
+            EdgeDragMode dm = EdgeDragMode.Head;
+            float headDist = ((Vector3)element.edge.head.transform.position - (Vector3)eventData.position).magnitude;
+            float tailDist = ((Vector3)element.edge.tail.transform.position - (Vector3)eventData.position).magnitude;
+            if (tailDist < headDist)
+            {
+                dm = EdgeDragMode.Tail;
+            }
+            element.edge.dragMode = dm;
+        }
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -52,6 +64,11 @@ public class ElementInteraction : MonoBehaviour, IBeginDragHandler, IDragHandler
         if (element.elementType == ElementType.Node)
         {
             MoveTo(eventData.position);
+        }
+        if (element.elementType == ElementType.Edge)
+        {
+            // send drag information
+            element.edge.dragPos = eventData.position;
         }
     }
 
@@ -86,6 +103,32 @@ public class ElementInteraction : MonoBehaviour, IBeginDragHandler, IDragHandler
             }
             GetComponent<CanvasGroup>().blocksRaycasts = true;
         }
+        if (element.elementType == ElementType.Edge)
+        {
+            Element dropTarget = null;
+            foreach (GameObject go in eventData.hovered)
+            {
+                Element e = go.GetComponent<Element>();
+                if (e != null)
+                {
+                    dropTarget = e;
+                }
+            }
+            Debug.Log("DropTarget: " + dropTarget);
+            if (dropTarget != null && dropTarget != element)
+            {
+                if (element.edge.dragMode == EdgeDragMode.Head)
+                {
+                    element.edge.head = dropTarget;
+                }
+                else if (element.edge.dragMode == EdgeDragMode.Tail)
+                {
+                    element.edge.tail = dropTarget;
+                }
+            }
+            element.edge.dragPos = Vector3.zero;
+            element.edge.dragMode = EdgeDragMode.None;
+        }
     }
 
     public void ClickedElement()
@@ -96,10 +139,11 @@ public class ElementInteraction : MonoBehaviour, IBeginDragHandler, IDragHandler
 
     public void OnDrop(PointerEventData eventData)
     {
+        Debug.Log("Dropped: " + eventData.selectedObject);
         if (element.elementType == ElementType.Node)
         {
             // We received a drop
-            Debug.Log("Dropped: " + eventData.selectedObject);
+            
         }
     }
 
