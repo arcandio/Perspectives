@@ -173,9 +173,10 @@ public class ElementFieldEditor : MonoBehaviour {
                     break;
                 case ElementFieldType.CustomFields:
                     break;
-            }
-            ElementPaneUI.elementUI.GenerateElementList();
+            }           
         }
+        ElementPaneUI.elementUI.GenerateElementList();
+        FileData.SetDirty();
     }
 
     TimelineDate FieldToTimelineDate()

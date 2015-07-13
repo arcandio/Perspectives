@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 
 public class FileOps : MonoBehaviour {
-    public Text debug;
+    public Text fileName;
     public FileBrowser fileBrowser;
 
     public void SaveFile()
@@ -20,28 +20,24 @@ public class FileOps : MonoBehaviour {
             fileBrowser.OpenFileBrowser(FileOperation.Save);
         }
         Debug.Log("Save");
-        debug.text = "save";
     }
 
     public void SaveFileAs ()
     {
         fileBrowser.OpenFileBrowser(FileOperation.Save);
         Debug.Log("Save as");
-        debug.text = "save as";
     }
 
     public void LoadFile()
     {
         fileBrowser.OpenFileBrowser(FileOperation.Load);
         Debug.Log("Load");
-        debug.text = "load";
     }
 
     public void NewFile()
     {
         FileData.currentFile = FileData.NewFile();
         Debug.Log("New");
-        debug.text = "new";
     }
 
     public void OpenSite()
@@ -73,6 +69,12 @@ public class FileOps : MonoBehaviour {
                 NewFile();
             }
         }
+        fileName.text = FileData.currentFile.fileName;
+        fileName.text += FileData.currentFile.fileExtension;
+        if (FileData.currentFile.isDirty)
+        {
+            fileName.text += "*";
+        }
+        
     }
-
 }

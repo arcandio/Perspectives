@@ -48,6 +48,11 @@ public class FileData : MonoBehaviour {
     public List<string> edgeTypesCustom;
     public List<string> customFields;
 
+    static public void SetDirty()
+    {
+        FileData.currentFile.isDirty = true;
+    }
+
     static public FileData GetFile(string path)
     {
         int index = FindInList(path);
@@ -76,6 +81,7 @@ public class FileData : MonoBehaviour {
     }
     static public FileData NewFile()
     {
+        DeactivateAll();
         // Create new object
         GameObject obj = new GameObject();
         // new script
@@ -131,30 +137,42 @@ public class FileData : MonoBehaviour {
     {
         perspectivesCustom = new List<string>();
         JSONObject jcp = j.GetField("custom perspectives");
-        for (int i = 0; i < jcp.Count; i++ )
+        if (jcp != null)
         {
-            perspectivesCustom.Add(jcp[i].str);
+            for (int i = 0; i < jcp.Count; i++)
+            {
+                perspectivesCustom.Add(jcp[i].str);
+            }
         }
 
         nodeTypesCustom = new List<string>();
         JSONObject jcnt = j.GetField("custom node types");
-        for (int i = 0; i < jcnt.Count; i++)
+        if (jcnt != null)
         {
-            nodeTypesCustom.Add(jcnt[i].str);
+            for (int i = 0; i < jcnt.Count; i++)
+            {
+                nodeTypesCustom.Add(jcnt[i].str);
+            }
         }
 
         edgeTypesCustom = new List<string>();
         JSONObject jcet = j.GetField("custom edge types");
-        for (int i = 0; i < jcet.Count; i++)
+        if (jcet != null)
         {
-            edgeTypesCustom.Add(jcet[i].str);
+            for (int i = 0; i < jcet.Count; i++)
+            {
+                edgeTypesCustom.Add(jcet[i].str);
+            }
         }
 
         customFields = new List<string>();
         JSONObject jcf = j.GetField("custom fields");
-        for (int i = 0; i < jcf.Count; i++)
+        if (jcf != null)
         {
-            customFields.Add(jcf[i].str);
+            for (int i = 0; i < jcf.Count; i++)
+            {
+                customFields.Add(jcf[i].str);
+            }
         }
     }
     void UnpackAllElements(JSONObject j)
@@ -261,6 +279,7 @@ public class FileData : MonoBehaviour {
         Debug.Log(jsonContents.ToString(true));
         // write string to file
         File.WriteAllText(path, rawContents);
+        isDirty = false;
     }
 
     void PackGlobalData(JSONObject j)
