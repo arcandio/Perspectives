@@ -176,7 +176,7 @@ public class ElementFieldEditor : MonoBehaviour {
             }           
         }
         ElementPaneUI.elementUI.GenerateElementList();
-        FileData.SetDirty();
+        FileData.currentFile.SetDirty();
     }
 
     TimelineDate FieldToTimelineDate()

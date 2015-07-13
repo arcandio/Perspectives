@@ -17,6 +17,7 @@ public class FileBrowser : MonoBehaviour {
     public List<FileBrowserButton> fileButtons;
     public Sprite folderIcon;
     public Sprite fileIcon;
+    public FileOps fileOps;
 
     public void OpenFileBrowser(FileOperation op)
     {
@@ -71,6 +72,7 @@ public class FileBrowser : MonoBehaviour {
                     }
                     break;
             }
+            fileOps.perspectiveDropdown.UpdateList();
         }
     }
     public void ReceiveClick(FileBrowserButton b)

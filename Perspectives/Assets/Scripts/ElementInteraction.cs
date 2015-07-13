@@ -64,7 +64,7 @@ public class ElementInteraction : MonoBehaviour, IBeginDragHandler, IDragHandler
         if (element.elementType == ElementType.Node)
         {
             MoveTo(eventData.position);
-            FileData.SetDirty();
+            FileData.currentFile.SetDirty();
         }
         if (element.elementType == ElementType.Edge)
         {
@@ -126,7 +126,7 @@ public class ElementInteraction : MonoBehaviour, IBeginDragHandler, IDragHandler
                 {
                     element.edge.tail = dropTarget;
                 }
-                FileData.SetDirty();
+                FileData.currentFile.SetDirty();
             }
             element.edge.dragPos = Vector3.zero;
             element.edge.dragMode = EdgeDragMode.None;

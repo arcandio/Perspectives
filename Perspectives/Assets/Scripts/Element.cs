@@ -79,6 +79,18 @@ public class Element : MonoBehaviour {
             }
         }
     }
+    public Perspective GetPerspective(string perspective)
+    {
+        Perspective temp = null;
+        foreach (Perspective p in perspectives)
+        {
+            if (p.perspective == perspective)
+            {
+                temp = p;
+            }
+        }
+        return temp;
+    }
 }
 public enum ElementType {
 	None,

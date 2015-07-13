@@ -45,7 +45,7 @@ public class BackgroundInteraction : MonoBehaviour, IDragHandler, IEndDragHandle
             clone.transform.SetParent(layout, false);
             nodeInteraction.Setup();
             nodeInteraction.MoveTo(eventData.position);
-            FileData.SetDirty();
+            FileData.currentFile.SetDirty();
         }
         if (eventData.clickCount == 1 && !eventData.dragging)
         {

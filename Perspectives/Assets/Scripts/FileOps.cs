@@ -32,7 +32,6 @@ public class FileOps : MonoBehaviour {
     public void LoadFile()
     {
         fileBrowser.OpenFileBrowser(FileOperation.Load);
-        perspectiveDropdown.UpdateList();
         Debug.Log("Load");
     }
 

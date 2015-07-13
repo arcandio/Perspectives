@@ -2,7 +2,7 @@
 using System.Collections;
 
 [System.Serializable]
-public struct Perspective {
+public class Perspective {
 	public string perspective;
 	public bool isDisplayed;
 	public Vector3 position;

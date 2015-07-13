@@ -49,11 +49,6 @@ public class FileData : MonoBehaviour {
     public List<string> customFields;
     public string currentPerspective = "Default";
 
-    static public void SetDirty()
-    {
-        FileData.currentFile.isDirty = true;
-    }
-
     static public FileData GetFile(string path)
     {
         int index = FindInList(path);
@@ -114,7 +109,10 @@ public class FileData : MonoBehaviour {
         }
         return index;
     }
-
+    public void SetDirty()
+    {
+        FileData.currentFile.isDirty = true;
+    }
     void LoadData()
     {
         // raw first
@@ -253,6 +251,15 @@ public class FileData : MonoBehaviour {
                     e.perspectives.Add(p);
                 }
             }
+            // add the Default perspective if it doesn't exist
+            if (e.GetPerspective("Default") == null)
+            {
+                Perspective p = new Perspective();
+                p.perspective = "Default";
+                p.isDisplayed = true;
+                p.position = e.transform.position;
+                e.perspectives.Add(p);
+            }
 
             // custom fields
             Dictionary<string, string> cf = new Dictionary<string, string>();
@@ -346,6 +353,14 @@ public class FileData : MonoBehaviour {
         }
 
         JSONObject p = new JSONObject(JSONObject.Type.ARRAY);
+        if (e.GetPerspective("Default") == null)
+        {
+            Perspective np = new Perspective();
+            np.perspective = "Default";
+            np.isDisplayed = true;
+            np.position = e.transform.position;
+            e.perspectives.Add(np);
+        }
         foreach (Perspective persp in e.perspectives)
         {
             JSONObject jp = new JSONObject();

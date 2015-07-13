@@ -26,7 +26,7 @@ public class PerspectiveDropdown : MonoBehaviour, IPointerEnterHandler, IPointer
         perspectives = new List<string>();
         perspectives.AddRange(FileData.perspectivesDefault);
         perspectives.AddRange(FileData.currentFile.perspectivesCustom);
-        toggles.Add(prototype);
+        //toggles.Add(prototype);
         CheckMinimumToggles(perspectives.Count);
         for (int i = 0; i < toggles.Count; i++)
         {
@@ -34,7 +34,9 @@ public class PerspectiveDropdown : MonoBehaviour, IPointerEnterHandler, IPointer
             if (i < perspectives.Count)
             {
                 t.gameObject.SetActive(true);
-                t.GetComponentInChildren<Text>().text = perspectives[i];
+                t.transform.GetChild(1).GetComponent<Text>().text = perspectives[i];
+                t.name = perspectives[i];
+                t.isOn = false;
                 if (perspectives[i] == FileData.currentFile.currentPerspective)
                 {
                     t.isOn = true;
@@ -51,9 +53,11 @@ public class PerspectiveDropdown : MonoBehaviour, IPointerEnterHandler, IPointer
 
     public void SetActivePerspective(Toggle t)
     {
-        perspective = t.GetComponentInChildren<Text>().text;
+        string oldPerspective = perspective;
+        perspective = t.name;
         dropdownText.text = perspective;
         index = GetIndex(t);
+        RepositionElements(perspective, oldPerspective);
     }
 
     void CheckMinimumToggles(int min)
@@ -70,7 +74,7 @@ public class PerspectiveDropdown : MonoBehaviour, IPointerEnterHandler, IPointer
     int GetIndex(Toggle t)
     {
         int match = -1;
-        string title = t.GetComponentInChildren<Text>().text;
+        string title = t.name;
         for (int i = 0; i < perspectives.Count; i++)
         {
             if (perspectives[i] == title)
@@ -99,5 +103,58 @@ public class PerspectiveDropdown : MonoBehaviour, IPointerEnterHandler, IPointer
         newIndex = newIndex < 0 ? (newIndex + perspectives.Count) : newIndex;
         newIndex %= perspectives.Count;
         toggles[newIndex].isOn = true;
+    }
+
+    void RepositionElements(string newPerspective, string oldPerspective)
+    {
+        Debug.Log("new: "+newPerspective + " old: "+ oldPerspective);
+        //string newPerspective = FileData.currentFile.currentPerspective;
+        bool showAll = false;
+        if (newPerspective == "Default")
+        {
+            showAll = true;
+        }
+        foreach (Element e in FileData.currentFile.allElements)
+        {
+            Perspective np = e.GetPerspective(newPerspective);
+            Perspective op = e.GetPerspective(oldPerspective);
+            
+            // show what's in the perspective by position
+            if (np != null && np.isDisplayed)
+            {
+                /*if (op == null)
+                {
+                    op = new Perspective();
+                    op.perspective = oldPerspective;
+                    op.position = e.transform.position;
+                    op.isDisplayed = true;
+                    e.perspectives.Add(op);
+                }*/
+                e.gameObject.SetActive(true);
+                if (op != null)
+                {
+                    op.position = e.transform.position;
+                }
+                e.transform.position = np.position;
+            }
+            // Show everything, even if it doesn't have a position
+            else if (showAll)
+            {
+                
+                np = new Perspective();
+                np.perspective = "Default";
+                np.position = e.transform.position;
+                np.isDisplayed = true;
+                e.perspectives.Add(np);
+                
+                e.gameObject.SetActive(true);
+            }
+            // Not included, and not showing all
+            else
+            {
+                e.gameObject.SetActive(false);
+            }
+        }
+        FileData.currentFile.SetDirty();
     }
 }
