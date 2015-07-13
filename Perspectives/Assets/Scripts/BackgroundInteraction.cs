@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class BackgroundInteraction : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDragHandler, IPointerClickHandler {
+public class BackgroundInteraction : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDragHandler, IPointerClickHandler, IScrollHandler {
     public GameObject nodePrototype;
     public GameObject edgePrototype;
     public Transform layout;
@@ -53,7 +53,7 @@ public class BackgroundInteraction : MonoBehaviour, IDragHandler, IEndDragHandle
         }
     }
 
-    void Update()
+    public void OnScroll (PointerEventData eventData)
     {
         float scroll = Input.GetAxis("Mouse ScrollWheel");
         if (scroll != 0f)

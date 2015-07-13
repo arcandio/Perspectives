@@ -69,8 +69,7 @@ public class FileOps : MonoBehaviour {
                 NewFile();
             }
         }
-        fileName.text = FileData.currentFile.fileName;
-        fileName.text += FileData.currentFile.fileExtension;
+        fileName.text = FileData.currentFile.fileDirectory+ System.IO.Path.DirectorySeparatorChar +FileData.currentFile.fileName + FileData.currentFile.fileExtension;
         if (FileData.currentFile.isDirty)
         {
             fileName.text += "*";

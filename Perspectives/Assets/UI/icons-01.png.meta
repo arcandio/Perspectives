@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: c6d821e3387d80744a0117101b65a640
-timeCreated: 1435262961
+timeCreated: 1436810704
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -10,6 +10,7 @@ TextureImporter:
     21300006: Edge
     21300008: Folder
     21300010: Document
+    21300012: DownArrow
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -112,6 +113,16 @@ TextureImporter:
         y: 0
         width: 22
         height: 22
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: DownArrow
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 16
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
