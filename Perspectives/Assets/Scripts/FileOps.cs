@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class FileOps : MonoBehaviour {
     public Text fileName;
     public FileBrowser fileBrowser;
+    public PerspectiveDropdown perspectiveDropdown;
 
     public void SaveFile()
     {
@@ -31,6 +32,7 @@ public class FileOps : MonoBehaviour {
     public void LoadFile()
     {
         fileBrowser.OpenFileBrowser(FileOperation.Load);
+        perspectiveDropdown.UpdateList();
         Debug.Log("Load");
     }
 

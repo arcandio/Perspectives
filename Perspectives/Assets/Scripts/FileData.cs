@@ -47,6 +47,7 @@ public class FileData : MonoBehaviour {
     public List<string> nodeTypesCustom;
     public List<string> edgeTypesCustom;
     public List<string> customFields;
+    public string currentPerspective = "Default";
 
     static public void SetDirty()
     {
