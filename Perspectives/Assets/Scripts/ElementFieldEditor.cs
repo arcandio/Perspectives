@@ -56,11 +56,11 @@ public class ElementFieldEditor : MonoBehaviour {
         {
             case ElementFieldType.Content:
                 inputField.gameObject.SetActive(true);
-                inputField.lineType = InputField.LineType.MultiLineSubmit;
+                inputField.lineType = InputField.LineType.MultiLineNewline;
                 break;
             case ElementFieldType.Description:
                 inputField.gameObject.SetActive(true);
-                inputField.lineType = InputField.LineType.MultiLineSubmit;
+                inputField.lineType = InputField.LineType.MultiLineNewline;
                 break;
             case ElementFieldType.SubType:
                 dropdownField.gameObject.SetActive(true);
@@ -153,9 +153,12 @@ public class ElementFieldEditor : MonoBehaviour {
                     break;
                 case ElementFieldType.Description:
                     e.description = inputField.text;
+                    e.SetDescription(FileData.currentFile.displayDescription ? e.description : null);
                     break;
                 case ElementFieldType.SubType:
-                    DisplayDropdown(dropdownField.isOn, FileData.currentFile.selectedElements[0].elementType.ToString());
+                    string s = e.elementSubType.ToString();
+                    DisplayDropdown(dropdownField.isOn, s);
+                    e.SetSubtype(FileData.currentFile.displaySubtype ? s : null);
                     break;
                 case ElementFieldType.Perspectives:
                     break;

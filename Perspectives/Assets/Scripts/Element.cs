@@ -21,6 +21,8 @@ public class Element : MonoBehaviour {
 	public List<Edge> edgesIn;
 	public RectTransform rectTransform;
     public Text buttonText;
+    public Text subtypeText;
+    public Text descriptionText;
     public ElementInteraction interaction;
     [SerializeField]
     Color color = Color.gray;
@@ -30,6 +32,8 @@ public class Element : MonoBehaviour {
 		Guid = System.Guid.NewGuid().ToString ();
         //Content = gameObject.name;
         Color = color;
+        SetDescription(description);
+        SetSubtype(elementSubType);
 	}
 
     public string Guid
@@ -52,7 +56,6 @@ public class Element : MonoBehaviour {
         }
         set
         {
-            //gameObject.name = value;
             buttonText.text = value;
         }
     }
@@ -71,12 +74,42 @@ public class Element : MonoBehaviour {
             {
                 buttonText.color = Color.black;
                 buttonText.GetComponent<Shadow>().effectColor = Color.white;
+                subtypeText.color = Color.black;
+                descriptionText.color = Color.black;
             }
             else
             {
                 buttonText.color = Color.white;
                 buttonText.GetComponent<Shadow>().effectColor = Color.black;
+                subtypeText.color = Color.white;
+                descriptionText.color = Color.white;
             }
+        }
+    }
+    public void SetSubtype(string s)
+    {
+        if (string.IsNullOrEmpty(s))
+        {
+            subtypeText.gameObject.SetActive(false);
+            subtypeText.text = "<->";
+        }
+        else
+        {
+            subtypeText.gameObject.SetActive(true);
+            subtypeText.text = "<" + s + ">";
+        }
+    }
+    public void SetDescription(string s)
+    {
+        if (string.IsNullOrEmpty(s))
+        {
+            descriptionText.gameObject.SetActive(false);
+            descriptionText.text = "-";
+        }
+        else
+        {
+            descriptionText.gameObject.SetActive(true);
+            descriptionText.text = s;
         }
     }
     public Perspective GetPerspective(string perspective)

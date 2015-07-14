@@ -48,6 +48,8 @@ public class FileData : MonoBehaviour {
     public List<string> edgeTypesCustom;
     public List<string> customFields;
     public string currentPerspective = "Default";
+    public bool displaySubtype = true;
+    public bool displayDescription = true;
 
     static public FileData GetFile(string path)
     {
@@ -270,6 +272,24 @@ public class FileData : MonoBehaviour {
                 {
                     cf.Add(jcf[0].str, jcf[0].str);
                 }
+            }
+
+            // apply node display
+            if (displaySubtype)
+            {
+                e.SetSubtype(e.elementSubType);
+            }
+            else
+            {
+                e.SetSubtype(null);
+            }
+            if (displayDescription)
+            {
+                e.SetSubtype(e.description);
+            }
+            else
+            {
+                e.SetDescription(null);
             }
         }
         return e;
