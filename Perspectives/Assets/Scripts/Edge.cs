@@ -21,24 +21,33 @@ public class Edge : Element {
 		UpdatePosition ();
 	}
 	void UpdatePosition () {
-		if (head != null && tail != null) {
-            // check for changes
-            if (head.rectTransform.position != headPos || tail.rectTransform.position != tailPos || dragMode != EdgeDragMode.None)
+        
+        // We always need a Head to start with, and we need either a tail or a dragpos
+		if (head != null 
+            && (tail != null || dragMode != EdgeDragMode.None))
+        {
+            
+            // skip if no changes
+            if (head != null 
+                && tail != null 
+                && head.rectTransform.position == headPos 
+                && tail.rectTransform.position == tailPos
+                && dragMode == EdgeDragMode.None)
+            {
+                // Do Nothing
+            }
+
+            // either the positions were changed, or we're on dragmode.
+            else
             {
                 // get head and tail pos
-                headPos = head.rectTransform.position;
-                tailPos = tail.rectTransform.position;
-
+                headPos = head != null ? head.rectTransform.position : Vector3.zero;
+                tailPos = tail != null ? tail.rectTransform.position : Vector3.zero;
+                
                 // check for dragging an end
-                if (dragMode == EdgeDragMode.Head)
-                {
-                    headPos = dragPos;
-                }
-                else if (dragMode == EdgeDragMode.Tail)
-                {
-                    tailPos = dragPos;
-                }
-
+                headPos = dragMode == EdgeDragMode.Head ? dragPos : headPos;       
+                tailPos = dragMode == EdgeDragMode.Tail ? dragPos : tailPos;
+                
                 // set label position
                 rectTransform.position = (headPos + tailPos) / 2;
 

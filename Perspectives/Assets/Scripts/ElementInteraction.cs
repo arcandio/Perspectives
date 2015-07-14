@@ -17,6 +17,8 @@ public class ElementInteraction : MonoBehaviour, IBeginDragHandler, IDragHandler
     public Image background;
     public UiButton uiButton;
     public Image highlight;
+    static Edge tempEdge;
+    public CanvasGroup lineGroup;
 
     void Start()
     {
@@ -36,40 +38,74 @@ public class ElementInteraction : MonoBehaviour, IBeginDragHandler, IDragHandler
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (element.elementType == ElementType.Node)
+        if (eventData.button == PointerEventData.InputButton.Left)
         {
-            Debug.Log("Drag");
-            itemBeingDragged = gameObject;
-            startPosition = transform.position;
-            startParent = transform.parent;
-            GetComponent<CanvasGroup>().blocksRaycasts = false;
-            rectTransform = GetComponent<RectTransform>();
-        }
-        if (element.elementType == ElementType.Edge)
-        {
-            // Determine dragged end
-            EdgeDragMode dm = EdgeDragMode.Head;
-            float headDist = ((Vector3)element.edge.head.transform.position - (Vector3)eventData.position).magnitude;
-            float tailDist = ((Vector3)element.edge.tail.transform.position - (Vector3)eventData.position).magnitude;
-            if (tailDist < headDist)
+            if (element.elementType == ElementType.Node)
             {
-                dm = EdgeDragMode.Tail;
+                Debug.Log("Drag");
+                itemBeingDragged = gameObject;
+                startPosition = transform.position;
+                startParent = transform.parent;
+                GetComponent<CanvasGroup>().blocksRaycasts = false;
+                rectTransform = GetComponent<RectTransform>();
             }
-            element.edge.dragMode = dm;
+            if (element.elementType == ElementType.Edge)
+            {
+                // Determine dragged end
+                EdgeDragMode dm = EdgeDragMode.Head;
+                float headDist = ((Vector3)element.edge.head.transform.position - (Vector3)eventData.position).magnitude;
+                float tailDist = ((Vector3)element.edge.tail.transform.position - (Vector3)eventData.position).magnitude;
+                if (tailDist < headDist)
+                {
+                    dm = EdgeDragMode.Tail;
+                }
+                element.edge.dragMode = dm;
+            }
+        }
+        else if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            // create new edge
+            GameObject prototype = (GameObject)Resources.Load("ElementEdge", typeof(GameObject));
+            GameObject clone = Instantiate(prototype);
+            tempEdge = clone.GetComponent<Edge>();
+            clone.transform.SetParent(transform.parent, false);
+            ElementInteraction nodeInteraction = clone.GetComponent<ElementInteraction>();
+            nodeInteraction.Setup();
+            //nodeInteraction.MoveTo(eventData.position);
+            // set head end to this element
+            tempEdge.head = element;
+            tempEdge.headGuid = element.Guid;
+            tempEdge.headPos = element.transform.position;
+            tempEdge.interaction.lineGroup.blocksRaycasts = false;
         }
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (element.elementType == ElementType.Node)
+        if (eventData.button == PointerEventData.InputButton.Left)
         {
-            MoveTo(eventData.position);
-            FileData.currentFile.SetDirty();
+            if (element.elementType == ElementType.Node)
+            {
+                MoveTo(eventData.position);
+                FileData.currentFile.SetDirty();
+            }
+            if (element.elementType == ElementType.Edge)
+            {
+                // send drag information
+                element.edge.dragPos = eventData.position;
+            }
         }
-        if (element.elementType == ElementType.Edge)
+        else if (eventData.button == PointerEventData.InputButton.Right)
         {
-            // send drag information
-            element.edge.dragPos = eventData.position;
+            // move tail end
+            tempEdge.dragMode = EdgeDragMode.Tail;
+            tempEdge.dragPos = eventData.position;
+        }
+        else if (tempEdge != null)
+        {
+            // move tail end
+            tempEdge.dragMode = EdgeDragMode.Tail;
+            tempEdge.dragPos = eventData.position;
         }
     }
 
@@ -95,41 +131,62 @@ public class ElementInteraction : MonoBehaviour, IBeginDragHandler, IDragHandler
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (element.elementType == ElementType.Node)
+        if (eventData.button == PointerEventData.InputButton.Left)
         {
-            itemBeingDragged = null;
-            if (transform.parent == startParent)
+            if (element.elementType == ElementType.Node)
             {
-                //transform.position = startPosition;
+                itemBeingDragged = null;
+                if (transform.parent == startParent)
+                {
+                    //transform.position = startPosition;
+                }
+                GetComponent<CanvasGroup>().blocksRaycasts = true;
             }
-            GetComponent<CanvasGroup>().blocksRaycasts = true;
+            if (element.elementType == ElementType.Edge)
+            {
+                Element dropTarget = null;
+                foreach (GameObject go in eventData.hovered)
+                {
+                    Element e = go.GetComponent<Element>();
+                    if (e != null)
+                    {
+                        dropTarget = e;
+                    }
+                }
+                Debug.Log("DropTarget: " + dropTarget);
+                if (dropTarget != null && dropTarget != element)
+                {
+                    if (element.edge.dragMode == EdgeDragMode.Head)
+                    {
+                        element.edge.head = dropTarget;
+                    }
+                    else if (element.edge.dragMode == EdgeDragMode.Tail)
+                    {
+                        element.edge.tail = dropTarget;
+                    }
+                    FileData.currentFile.SetDirty();
+                }
+                element.edge.dragPos = Vector3.zero;
+                element.edge.dragMode = EdgeDragMode.None;
+            }
         }
-        if (element.elementType == ElementType.Edge)
+        else if (eventData.button == PointerEventData.InputButton.Right)
         {
-            Element dropTarget = null;
-            foreach (GameObject go in eventData.hovered)
+            // decide whether to connect or destroy
+            if (tempEdge.tail == null)
             {
-                Element e = go.GetComponent<Element>();
-                if (e != null)
-                {
-                    dropTarget = e;
-                }
+                Debug.Log("Destroy");
+                FileData.currentFile.allElements.Remove(tempEdge);
+                Destroy(tempEdge.gameObject);
+                ElementPaneUI.elementUI.GenerateElementList();
             }
-            Debug.Log("DropTarget: " + dropTarget);
-            if (dropTarget != null && dropTarget != element)
+            else
             {
-                if (element.edge.dragMode == EdgeDragMode.Head)
-                {
-                    element.edge.head = dropTarget;
-                }
-                else if (element.edge.dragMode == EdgeDragMode.Tail)
-                {
-                    element.edge.tail = dropTarget;
-                }
-                FileData.currentFile.SetDirty();
+                Debug.Log("Drag End hit");
+                tempEdge.dragMode = EdgeDragMode.None;
+                tempEdge.interaction.lineGroup.blocksRaycasts = true;
+                tempEdge = null;
             }
-            element.edge.dragPos = Vector3.zero;
-            element.edge.dragMode = EdgeDragMode.None;
         }
     }
 
@@ -142,10 +199,11 @@ public class ElementInteraction : MonoBehaviour, IBeginDragHandler, IDragHandler
     public void OnDrop(PointerEventData eventData)
     {
         Debug.Log("Dropped: " + eventData.selectedObject);
-        if (element.elementType == ElementType.Node)
+        if (eventData.button == PointerEventData.InputButton.Right && element != tempEdge)
         {
-            // We received a drop
-            
+            tempEdge.tail = element;
+            tempEdge.tailGuid = element.Guid;
+            tempEdge.dragPos = element.transform.position;
         }
     }
 
