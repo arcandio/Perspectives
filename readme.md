@@ -7,6 +7,8 @@ Perspectives is a node-based graph editor intended to help you design, write, un
 ## Get Perspectives
 [Download Perspectives Here](https://github.com/arcandio/Perspectives/releases)
 
+![screenshot](Distros/screenshot_alpha.png)
+
 ## Development
 
 [Help is available here.](https://github.com/arcandio/Perspectives/wiki)
