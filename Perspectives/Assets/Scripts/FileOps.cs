@@ -6,6 +6,12 @@ public class FileOps : MonoBehaviour {
     public Text fileName;
     public FileBrowser fileBrowser;
     public PerspectiveDropdown perspectiveDropdown;
+    public GameObject helpPanel;
+
+    void Start()
+    {
+        // https://github.com/arcandio/Perspectives/issues/36
+    }
 
     public void SaveFile()
     {
@@ -44,6 +50,11 @@ public class FileOps : MonoBehaviour {
     public void OpenSite()
     {
         Application.OpenURL("https://github.com/arcandio/Perspectives");
+    }
+
+    public void OpenHelpSite()
+    {
+        Application.OpenURL("https://github.com/arcandio/Perspectives/wiki");
     }
 
     void Update ()
