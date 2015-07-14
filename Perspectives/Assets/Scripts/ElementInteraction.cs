@@ -217,6 +217,11 @@ public class ElementInteraction : MonoBehaviour, IBeginDragHandler, IDragHandler
         if (eventData.clickCount == 2)
         {
             Debug.Log("Edit");
+            ElementFieldEditor efe = ElementPaneUI.elementUI.elementFieldEditors[0];
+            efe.inputField.ActivateInputField();
+            efe.inputField.Select();
+            efe.inputField.selectionAnchorPosition = 0;
+            efe.inputField.selectionFocusPosition = efe.inputField.text.Length;
         }
     }
 
