@@ -44,7 +44,7 @@ Perspectives are different arrangements of nodes. Think of them as alternate pla
 # GUI
 * Node Editor Pane
 	* Element List
-		* Local/Global *not implemented yet: #43*
+		* Local/Global *not implemented yet:* #43
 	* Element Attributes
 * Menu
 	* New
@@ -52,7 +52,7 @@ Perspectives are different arrangements of nodes. Think of them as alternate pla
 	* Save As
 	* Load
 	* Help
-* Tool Pane *removed as unnecessary: #44*
+* Tool Pane *removed as unnecessary:* #44
 	* New Node
 	* Delete Node
 	* Create Edge
@@ -62,7 +62,7 @@ Perspectives are different arrangements of nodes. Think of them as alternate pla
 ## NodeInteraction
 * Move Node (drag node)
 * Link Nodes (right-click-drag node to node)
-* Add Node to parent (drag and drop node on other node) *not implemented yet: #45*
+* Add Node to parent (drag and drop node on other node) *not implemented yet:* #45
 * Select Just This Node (click node)
 * Add Node to Selection (Ctrl+Click node)
 * Edit Node (double-click node)
