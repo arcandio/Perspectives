@@ -44,28 +44,28 @@ Perspectives are different arrangements of nodes. Think of them as alternate pla
 # GUI
 * Node Editor Pane
 	* Element List
-		* Local/Global
+		* Local/Global *not implemented yet: #43*
 	* Element Attributes
-* Tool Pane
-	* New Node
-	* Delete Node
-	* Create Edge
-	* 
 * Menu
 	* New
 	* Save
 	* Save As
 	* Load
+	* Help
+* Tool Pane *removed as unnecessary: #44*
+	* New Node
+	* Delete Node
+	* Create Edge
 
 # Interaction Design
 
 ## NodeInteraction
-* Move Node (drag node to background)
+* Move Node (drag node)
 * Link Nodes (right-click-drag node to node)
-* Add Node to parent (drag and drop node on other node)
+* Add Node to parent (drag and drop node on other node) *not implemented yet: #45*
 * Select Just This Node (click node)
 * Add Node to Selection (Ctrl+Click node)
-* Enter Node (double-click node)
+* Edit Node (double-click node)
 
 ## EdgeInteraction
 * Move Edge Head (drag head end of Edge)
