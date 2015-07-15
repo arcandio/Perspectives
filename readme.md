@@ -16,3 +16,5 @@ Perspectives is a node-based graph editor intended to help you design, write, un
 Check out the [development notes here](dev.md), or the [current milestone](https://github.com/arcandio/Perspectives/milestones/Alpha).
 
 [Propose features and report bugs here.](https://github.com/arcandio/Perspectives/issues)
+
+And Lastly, if you like Perspectives, please consider donating bitcoin: `14aK1JZ6tuMKn6q5fGVky4kkWh1RbR2ttq`
