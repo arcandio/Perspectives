@@ -17,4 +17,6 @@ Check out the [development notes here](dev.md), or the [current milestone](https
 
 [Propose features and report bugs here.](https://github.com/arcandio/Perspectives/issues)
 
-And Lastly, if you like Perspectives, please consider donating bitcoin: `14aK1JZ6tuMKn6q5fGVky4kkWh1RbR2ttq`
+And Lastly, if you like Perspectives, please consider donating bitcoin: ![12AisCShNXkULSsSYdExBGdCSh5jM5hZzV](Distro/bitcoin_wallet.PNG)
+
+`12AisCShNXkULSsSYdExBGdCSh5jM5hZzV`
