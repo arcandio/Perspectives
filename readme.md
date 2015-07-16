@@ -17,6 +17,10 @@ Check out the [development notes here](dev.md), or the [current milestone](https
 
 [Propose features and report bugs here.](https://github.com/arcandio/Perspectives/issues)
 
+
+## Donations
 And Lastly, if you like Perspectives, please consider donating bitcoin: `12AisCShNXkULSsSYdExBGdCSh5jM5hZzV`
 
 ![12AisCShNXkULSsSYdExBGdCSh5jM5hZzV](Distro/bitcoin_wallet.PNG)
+
+Or you can use the [Coinbase Page](https://www.coinbase.com/Voidspiral)
